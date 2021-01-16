@@ -1,6 +1,5 @@
 #include <iostream>
 #include "structure.h"
-#include "capturer.h"
 using namespace std;
 
 void initJoueur(Jeu *jeu, Joueur *j1, Joueur *j2)
@@ -14,6 +13,21 @@ void initJoueur(Jeu *jeu, Joueur *j1, Joueur *j2)
     j2->nbJetons = 2;
 }
 
+void displayBoard(char Board[8][8])
+{
+    cout << "     A   B   C   D   E   F   G   H" << endl;
+    for (int row = 0; row < 8; row++)
+    {
+        cout << "   +---+---+---+---+---+---+---+---+" << endl;
+        cout << row + 1 << "  | ";
+        for (int col = 0; col < 8; col++)
+        {
+            cout << Board[row][col] << " | ";
+        }
+        cout << endl;
+    }
+    cout << "   +---+---+---+---+---+---+---+---+" << endl;
+}
 //demande le placement du nouveau jeton et l'ajoute au bon endroit dans le tableau
 void nouveauJeton(char Board[8][8]) //ajouter la paramètre Joueur joueur pour la couleur du jeton
 {
