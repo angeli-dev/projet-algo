@@ -1,6 +1,7 @@
 #include <iostream>
 #include "structure.h"
 #include "appelFonctions.h"
+#include "capturer.h"
 using namespace std;
 
 int main(int argc, char *argv[])

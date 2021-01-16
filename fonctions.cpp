@@ -1,5 +1,6 @@
 #include <iostream>
 #include "structure.h"
+#include "appelFonctions.h"
 using namespace std;
 
 void initJoueur(Jeu *jeu, Joueur *j1, Joueur *j2)
