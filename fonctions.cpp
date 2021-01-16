@@ -33,14 +33,14 @@ void initJoueur(Jeu *jeu, Joueur *j1, Joueur *j2)
     jeu->j2 = *j2;
 }
 
-void nouveauJeton(char Board[8][8]) //ajouter la paramètre Joueur Joueur pour la couleur du jeton
+void nouveauJeton(char Board[8][8], Joueur joueurActuel) //ajouter la paramètre Joueur Joueur pour la couleur du jeton
 {
     Jeton *nouveauJeton = (Jeton *)malloc(sizeof(*nouveauJeton));
     char pos[2];
     //détermine couleur jeton en fonction du joueur actuel (à faire, par défaut A)
-    cout << "Token : ";
-    cin >> nouveauJeton->color;
-    cout << nouveauJeton->color << endl;
+    nouveauJeton->color[0] = (&joueurActuel)->color[0];
+    //nombre de pions du joueur actuel+1
+    (&joueurActuel)->nbJetons += 1;
     //demande placement jeton
     cout << "Ou voulez vous placez votre jeton : (Ex: B4, G2...) ";
     cin >> pos;
