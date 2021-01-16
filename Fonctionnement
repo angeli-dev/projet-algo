@@ -1,0 +1,3 @@
+Créer une boucle while -> Faire en sorte que les mêmes fonctions soit répéter jusqu'à la condition de fin.
+Condition de fin : plus de place sur le plateau, aucun joueur ne peut jouer -> Faire le compte et déclarer le gagnant.
+Si un joueur ne peut pas joué, il passe son tour.
