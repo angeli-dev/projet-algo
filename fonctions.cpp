@@ -1,18 +1,7 @@
 #include <iostream>
+using namespace std;
 #include "structure.h"
 #include "appelFonctions.h"
-using namespace std;
-
-void initJoueur(Jeu *jeu, Joueur *j1, Joueur *j2)
-{
-    cout << "Quel est le nom du premier joueur : ";
-    cin >> j1->name;
-    j1->nbJetons = 2;
-
-    cout << "Quel est le nom du second joueur : ";
-    cin >> j2->name;
-    j2->nbJetons = 2;
-}
 
 void displayBoard(char Board[8][8])
 {
@@ -28,6 +17,17 @@ void displayBoard(char Board[8][8])
         cout << endl;
     }
     cout << "   +---+---+---+---+---+---+---+---+" << endl;
+}
+
+void initJoueur(Jeu *jeu, Joueur *j1, Joueur *j2)
+{
+    cout << "Quel est le nom du premier joueur : ";
+    cin >> j1->name;
+    j1->nbJetons = 2;
+
+    cout << "Quel est le nom du second joueur : ";
+    cin >> j2->name;
+    j2->nbJetons = 2;
 }
 //demande le placement du nouveau jeton et l'ajoute au bon endroit dans le tableau
 void nouveauJeton(char Board[8][8]) //ajouter la paramètre Joueur joueur pour la couleur du jeton
