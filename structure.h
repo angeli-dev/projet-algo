@@ -1,15 +1,19 @@
-typedef struct Jeton {
+struct Jeton
+{
     char color;
     int x;
     int y;
-} jeton;
+};
 
-typedef struct Joueur {
+struct Joueur
+{
     char name[20];
     int nbJetons;
-} joueur;
+};
 
-typedef struct Jeu {
+struct Jeu
+{
     Joueur j1;
     Joueur j2;
-} jeu;
+    char Board[8][8];
+};

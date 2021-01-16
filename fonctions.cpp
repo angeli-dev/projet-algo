@@ -15,11 +15,12 @@ void initJoueur(Jeu *jeu, Joueur *j1, Joueur *j2)
 }
 
 //demande le placement du nouveau jeton et l'ajoute au bon endroit dans le tableau
-void nouveauJeton(char Board[8][8]) //ajouter la paramètre Joueur Joueur pour la couleur du jeton
+void nouveauJeton(char Board[8][8]) //ajouter la paramètre Joueur joueur pour la couleur du jeton
 {
     Jeton *nouveauJeton;
 
-    //détermine couleur jeton en fonction du joueur actuel (à faire, par défaut A)
+    //détermine couleur jeton en fonction du joueur actuel
+    //(à faire, par défaut A)
     char A;
     nouveauJeton->color = A;
 
