@@ -1,6 +1,5 @@
 #include <iostream>
 #include "structure.h"
-#include "capturer.h"
 using namespace std;
 
 void displayBoard(char Board[8][8]);
