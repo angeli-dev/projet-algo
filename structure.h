@@ -1,5 +1,5 @@
 typedef struct Jeton {
-    char color;
+    char color[1];
     int x;
     int y;
 } jeton;
