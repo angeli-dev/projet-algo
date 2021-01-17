@@ -4,7 +4,7 @@ using namespace std;
 #include "structure.h"
 #include "appelFonctions.h"
 
-void displayBoard(char Board[8][8])
+void displayBoard(Jeton *Board[8][8])
 {
     cout << "     A   B   C   D   E   F   G   H" << endl;
     for (int row = 0; row < 8; row++)
@@ -13,7 +13,13 @@ void displayBoard(char Board[8][8])
         cout << row + 1 << "  | ";
         for (int col = 0; col < 8; col++)
         {
-            cout << Board[row][col] << " | ";
+            if (Board[row][col])
+            {
+                cout << Board[row][col]->color[0] << " | ";
+            }
+            else
+                cout << " "
+                     << " | ";
         }
         cout << endl;
     }
@@ -33,14 +39,24 @@ void initJoueur(Jeu *jeu, Joueur *j1, Joueur *j2)
     jeu->j2 = *j2;
 }
 
-void nouveauJeton(char Board[8][8], Joueur joueurActuel) //ajouter la paramètre Joueur Joueur pour la couleur du jeton
+Jeton *initJeton(Jeton *Board[8][8], Joueur joueurActif, int posY, int posX)
+{
+    Jeton *nouveauJeton = (Jeton *)malloc(sizeof(*nouveauJeton));
+    nouveauJeton->x = posX;
+    nouveauJeton->y = posY;
+    nouveauJeton->color[0] = (&joueurActif)->color[0];
+    //placer  jeton
+    Board[nouveauJeton->y][nouveauJeton->x] = nouveauJeton;
+    return nouveauJeton;
+}
+
+Jeton *nouveauJeton(Jeton *Board[8][8], Joueur joueurActif) //ajouter la paramètre Joueur Joueur pour la couleur du jeton
 {
     Jeton *nouveauJeton = (Jeton *)malloc(sizeof(*nouveauJeton));
     char pos[2];
-    //détermine couleur jeton en fonction du joueur actuel (à faire, par défaut A)
-    nouveauJeton->color[0] = (&joueurActuel)->color[0];
+
     //nombre de pions du joueur actuel+1
-    (&joueurActuel)->nbJetons += 1;
+    (&joueurActif)->nbJetons += 1;
     //demande placement jeton
     cout << "Ou voulez vous placez votre jeton : (Ex: B4, G2...) ";
     cin >> pos;
@@ -110,7 +126,35 @@ void nouveauJeton(char Board[8][8], Joueur joueurActuel) //ajouter la paramètre
     {
         nouveauJeton->y = 7;
     }
+
+    //détermine couleur jeton en fonction du joueur actuel
+    nouveauJeton->color[0] = (&joueurActif)->color[0];
+
     //place le jeton dans le tableau
-    Board[nouveauJeton->y][nouveauJeton->x] = 'A';
-    displayBoard(Board);
+    Board[nouveauJeton->y][nouveauJeton->x] = nouveauJeton;
+
+    return nouveauJeton;
+}
+
+void captureJetons(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, Jeton nouveauJeton)
+{
+
+    int nbJetonsACapturer = 0;
+    int posY = (&nouveauJeton)->y;
+    cout << posY << endl;
+    int posX = (&nouveauJeton)->x;
+    cout << posX << endl;
+
+    //capture les jetons à droite
+    while (Board[posY][posX + 1]->color[0] == (&joueurPassif)->color[0])
+    {
+        nbJetonsACapturer += 1;
+        posX += 1;
+    }
+
+    for (int i = 0; i < nbJetonsACapturer; i++)
+    {
+        Board[posY][posX]->color[0] = (&joueurActif)->color[0];
+        posX -= 1;
+    }
 }

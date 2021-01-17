@@ -16,5 +16,5 @@ typedef struct Jeu
 {
     Joueur j1;
     Joueur j2;
-    char Board[8][8];
+    Jeton *Board[8][8];
 } jeu;
