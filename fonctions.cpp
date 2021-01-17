@@ -45,35 +45,35 @@ void nouveauJeton(char Board[8][8], Joueur joueurActuel) //ajouter la paramètre
     cout << "Ou voulez vous placez votre jeton : (Ex: B4, G2...) ";
     cin >> pos;
     //Position X
-    if (pos[0] == 'A')
+    if (pos[0] == 'A' || pos[0] == 'a')
     {
         nouveauJeton->x = 0;
     }
-    else if (pos[0] == 'B')
+    else if (pos[0] == 'B' || pos[0] == 'b')
     {
         nouveauJeton->x = 1;
     }
-    else if (pos[0] == 'C')
+    else if (pos[0] == 'C' || pos[0] == 'c')
     {
         nouveauJeton->x = 2;
     }
-    else if (pos[0] == 'D')
+    else if (pos[0] == 'D' || pos[0] == 'd')
     {
         nouveauJeton->x = 3;
     }
-    else if (pos[0] == 'E')
+    else if (pos[0] == 'E' || pos[0] == 'e')
     {
         nouveauJeton->x = 4;
     }
-    else if (pos[0] == 'F')
+    else if (pos[0] == 'F' || pos[0] == 'f')
     {
         nouveauJeton->x = 5;
     }
-    else if (pos[0] == 'G')
+    else if (pos[0] == 'G' || pos[0] == 'g')
     {
         nouveauJeton->x = 6;
     }
-    else if (pos[0] == 'H')
+    else if (pos[0] == 'H' || pos[0] == 'h')
     {
         nouveauJeton->x = 7;
     }
