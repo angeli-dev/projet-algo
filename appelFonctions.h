@@ -1,4 +1,5 @@
-void displayBoard(char Board[8][8]);
+void displayBoard(Jeton *Board[8][8]);
 void initJoueur(Jeu *jeu, Joueur *j1, Joueur *j2);
-void nouveauJeton(char Board[8][8], Joueur joueurActuel);
-void captureJetons(char Board[8][8], Joueur joueurActuel, Jeton nouveauJeton);
+Jeton *initJeton(Jeton *Board[8][8], Joueur joueurActif, int posY, int posX);
+Jeton *nouveauJeton(Jeton *Board[8][8], Joueur joueurActif);
+void captureJetons(Jeton *Board[8][8], Joueur joueurActif, Joueur Passif, Jeton nouveauJeton);
