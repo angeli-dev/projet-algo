@@ -76,8 +76,10 @@ Jeton *initJeton(Jeton *Board[8][8], Joueur joueurActif, int posY, int posX)
 
 void nouveauTour(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif)
 {
+    casesJouables(Board, joueurActif, joueurPassif);
     Jeton *jeton = nouveauJeton(Board, joueurActif);
     displayBoard(Board);
+
     //capture
     captureJetons(Board, joueurActif, joueurPassif, *jeton);
 }
@@ -168,6 +170,37 @@ Jeton *nouveauJeton(Jeton *Board[8][8], Joueur joueurActif)
 
     //retourne le nouveau jeton
     return nouveauJeton;
+}
+
+void casesJouables(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif)
+{
+    for (int row = 0; row < 8; row++)
+    {
+        for (int col = 0; col < 8; col++)
+        {
+
+            if (Board[row][col] != NULL)
+            {
+                cout << "in if" << row << col << endl;
+
+                testDroite(Board, joueurActif, joueurPassif, row, col);
+            }
+        }
+    }
+}
+
+void testDroite(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, int posY, int posX)
+{
+    //int nbJetonsACapturer = 0;
+    if (Board[posY][posX + 1])
+    {
+        if (Board[posY][posX + 1]->color[0] == (&joueurPassif)->color[0]) //condition 1 => pion adverse à côté
+        {
+
+            cout << "coucou" << endl;
+            //cout << "in test" << posX << posY << endl;
+        }
+    }
 }
 
 void captureJetons(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, Jeton nouveauJeton)

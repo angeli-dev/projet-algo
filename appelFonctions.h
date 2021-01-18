@@ -11,6 +11,10 @@ Jeton *initJeton(Jeton *Board[8][8], Joueur joueurActif, int posY, int posX);
 //partie
 Jeton *nouveauJeton(Jeton *Board[8][8], Joueur joueurActif);
 void nouveauTour(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif);
+void casesJouables(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif);
+
+//fonctions test
+void testDroite(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, int posY, int posX);
 
 //fonctions capture
 void captureJetons(Jeton *Board[8][8], Joueur joueurActif, Joueur Passif, Jeton nouveauJeton);
