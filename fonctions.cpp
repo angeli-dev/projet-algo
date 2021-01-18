@@ -6,6 +6,8 @@ using namespace std;
 
 void displayBoard(Jeton *Board[8][8])
 {
+
+    cout << "     ---PLATEAU ACTUEL---" << endl;
     cout << "     A   B   C   D   E   F   G   H" << endl;
     for (int row = 0; row < 8; row++)
     {
@@ -138,23 +140,52 @@ Jeton *nouveauJeton(Jeton *Board[8][8], Joueur joueurActif) //ajouter la paramè
 
 void captureJetons(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, Jeton nouveauJeton)
 {
+    captureDroite(Board, joueurActif, joueurPassif, nouveauJeton);
+    captureGauche(Board, joueurActif, joueurPassif, nouveauJeton);
+}
 
-    int nbJetonsACapturer = 0;
+void captureDroite(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, Jeton nouveauJeton)
+{
     int posY = (&nouveauJeton)->y;
-    cout << posY << endl;
     int posX = (&nouveauJeton)->x;
-    cout << posX << endl;
+    int nbJetonsACapturer = 0;
 
-    //capture les jetons à droite
-    while (Board[posY][posX + 1]->color[0] == (&joueurPassif)->color[0])
+    if (Board[posY][posX + 1])
     {
-        nbJetonsACapturer += 1;
-        posX += 1;
-    }
+        while (Board[posY][posX + 1]->color[0] == (&joueurPassif)->color[0])
+        {
+            nbJetonsACapturer += 1;
+            posX += 1;
+        }
+    };
+
+    for (int i = 0; i < nbJetonsACapturer; i++)
+    {
+
+        Board[posY][posX]->color[0] = (&joueurActif)->color[0];
+        posX -= 1;
+    };
+}
+
+void captureGauche(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, Jeton nouveauJeton)
+{
+    int posY = (&nouveauJeton)->y;
+    int posX = (&nouveauJeton)->x;
+    int nbJetonsACapturer = 0;
+
+    if (Board[posY][posX - 1])
+    {
+        while (Board[posY][posX - 1]->color[0] == (&joueurPassif)->color[0])
+        {
+
+            nbJetonsACapturer += 1;
+            posX -= 1;
+        }
+    };
 
     for (int i = 0; i < nbJetonsACapturer; i++)
     {
         Board[posY][posX]->color[0] = (&joueurActif)->color[0];
-        posX -= 1;
+        posX += 1;
     }
 }
