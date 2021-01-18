@@ -76,10 +76,10 @@ Jeton *initJeton(Jeton *Board[8][8], Joueur joueurActif, int posY, int posX)
 
 void nouveauTour(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif)
 {
-    Jeton *nouveauJeton = nouveauJeton(Board, joueurActif);
+    Jeton *jeton = nouveauJeton(Board, joueurActif);
     displayBoard(Board);
     //capture
-    captureJetons(Board, joueurActif, joueurPassif, nouveauJeton);
+    captureJetons(Board, joueurActif, joueurPassif, *jeton);
 }
 
 Jeton *nouveauJeton(Jeton *Board[8][8], Joueur joueurActif)
