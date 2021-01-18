@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
     initBoard((&jeu1)->Board, j1, j2);
     displayBoard((&jeu1)->Board);
     //fonction joueur actuel (par defaut j1)
-    while (1)
+    while (1) //réalise 2 tours de jeux ?
     {
         nouveauTour((&jeu1)->Board, j1, j2);
     }
