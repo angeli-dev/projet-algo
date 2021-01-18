@@ -75,6 +75,14 @@ Jeton *initJeton(Jeton *Board[8][8], Joueur joueurActif, int posY, int posX)
     return nouveauJeton;
 }
 
+void nouveauTour(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif)
+{
+    Jeton nouveauJeton = nouveauJeton(Board, joueurActif);
+    displayBoard(Board);
+    //capture
+    captureJetons(Board, joueurActif, joueurPassif, nouveauJeton);
+}
+
 Jeton *nouveauJeton(Jeton *Board[8][8], Joueur joueurActif)
 {
 
