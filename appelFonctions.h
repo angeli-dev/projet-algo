@@ -1,4 +1,7 @@
 //affichage tableau, plateau
+void initBoard(Jeton *Board[8][8], Joueur j1, Joueur j2);
+
+//initialisation tableau, plateau
 void displayBoard(Jeton *Board[8][8]);
 
 //initialisation des joueurs, jetons

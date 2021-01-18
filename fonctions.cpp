@@ -4,9 +4,27 @@ using namespace std;
 #include "structure.h"
 #include "appelFonctions.h"
 
+void initBoard(Jeton *Board[8][8], Joueur j1, Joueur j2)
+{
+    int i(0), j(0);
+    for (i = 0; i < 8; i++)
+    {
+        for (j = 0; j < 8; j++)
+        {
+            Board[i][j] = NULL;
+        }
+    }
+    //Initialise les jetons présents sur le plateau
+    initJeton(Board, j1, 3, 3);
+    initJeton(Board, j2, 3, 4);
+    initJeton(Board, j2, 4, 3);
+    initJeton(Board, j1, 4, 4);
+}
 void displayBoard(Jeton *Board[8][8])
 {
-    cout << "     ---PLATEAU ACTUEL---" << endl;
+
+    cout << "          ---PLATEAU ACTUEL---" << endl;
+
     cout << "     A   B   C   D   E   F   G   H" << endl;
     for (int row = 0; row < 8; row++)
     {
@@ -31,11 +49,15 @@ void initJoueur(Jeu *jeu, Joueur *j1, Joueur *j2)
 {
     cout << "Quel est le nom du premier joueur : ";
     cin >> j1->name;
+    cout << "Choisisez votre couleur : ";
+    cin >> j1->color;
     j1->nbJetons = 2;
     jeu->j1 = *j1;
 
     cout << "Quel est le nom du second joueur : ";
     cin >> j2->name;
+    cout << "Choisisez votre couleur : ";
+    cin >> j2->color;
     j2->nbJetons = 2;
     jeu->j2 = *j2;
 }
@@ -45,14 +67,15 @@ Jeton *initJeton(Jeton *Board[8][8], Joueur joueurActif, int posY, int posX)
     Jeton *nouveauJeton = (Jeton *)malloc(sizeof(*nouveauJeton));
     nouveauJeton->x = posX;
     nouveauJeton->y = posY;
+    //Récupérer couleur du joueur
     nouveauJeton->color[0] = (&joueurActif)->color[0];
+    //Placer  jeton
 
-    //placer le jeton
     Board[nouveauJeton->y][nouveauJeton->x] = nouveauJeton;
     return nouveauJeton;
 }
 
-Jeton *nouveauJeton(Jeton *Board[8][8], Joueur joueurActif) //ajouter la paramètre Joueur Joueur pour la couleur du jeton
+Jeton *nouveauJeton(Jeton *Board[8][8], Joueur joueurActif)
 {
 
     char pos[2];
