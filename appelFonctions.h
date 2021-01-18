@@ -14,3 +14,7 @@ void captureDroite(Jeton *Board[8][8], Joueur joueurActif, Joueur Passif, Jeton 
 void captureGauche(Jeton *Board[8][8], Joueur joueurActif, Joueur Passif, Jeton nouveauJeton);
 void captureHaut(Jeton *Board[8][8], Joueur joueurActif, Joueur Passif, Jeton nouveauJeton);
 void captureBas(Jeton *Board[8][8], Joueur joueurActif, Joueur Passif, Jeton nouveauJeton);
+void captureDiagonaleDH(Jeton *Board[8][8], Joueur joueurActif, Joueur Passif, Jeton nouveauJeton);
+void captureDiagonaleDB(Jeton *Board[8][8], Joueur joueurActif, Joueur Passif, Jeton nouveauJeton);
+void captureDiagonaleGH(Jeton *Board[8][8], Joueur joueurActif, Joueur Passif, Jeton nouveauJeton);
+void captureDiagonaleGB(Jeton *Board[8][8], Joueur joueurActif, Joueur Passif, Jeton nouveauJeton);
