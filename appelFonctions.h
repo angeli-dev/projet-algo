@@ -9,8 +9,8 @@ void initJoueur(Jeu *jeu, Joueur *j1, Joueur *j2);
 Jeton *initJeton(Jeton *Board[8][8], Joueur joueurActif, int posY, int posX);
 
 //partie
+Jeton *nouveauJeton(Jeton *Board[8][8], Joueur joueurActif);
 void nouveauTour(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif);
-Jeton nouveauJeton(Jeton *Board[8][8], Joueur joueurActif);
 
 //fonctions capture
 void captureJetons(Jeton *Board[8][8], Joueur joueurActif, Joueur Passif, Jeton nouveauJeton);

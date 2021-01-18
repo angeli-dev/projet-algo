@@ -22,7 +22,6 @@ void initBoard(Jeton *Board[8][8], Joueur j1, Joueur j2)
 }
 void displayBoard(Jeton *Board[8][8])
 {
-
     cout << "          ---PLATEAU ACTUEL---" << endl;
 
     cout << "     A   B   C   D   E   F   G   H" << endl;
@@ -77,7 +76,7 @@ Jeton *initJeton(Jeton *Board[8][8], Joueur joueurActif, int posY, int posX)
 
 void nouveauTour(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif)
 {
-    Jeton nouveauJeton = nouveauJeton(Board, joueurActif);
+    Jeton *nouveauJeton = nouveauJeton(Board, joueurActif);
     displayBoard(Board);
     //capture
     captureJetons(Board, joueurActif, joueurPassif, nouveauJeton);
