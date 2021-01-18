@@ -134,7 +134,7 @@ Jeton *nouveauJeton(Jeton *Board[8][8], Joueur joueurActif) //ajouter la paramè
     }
 
     //creer et place le nouveau jeton
-    Jeton *nouveauJeton = initJeton(Board, joueurActif, posX, posY);
+    Jeton *nouveauJeton = initJeton(Board, joueurActif, posY, posX);
 
     //retourne le nouveau jeton
     return nouveauJeton;
@@ -144,6 +144,8 @@ void captureJetons(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, 
 {
     captureDroite(Board, joueurActif, joueurPassif, nouveauJeton);
     captureGauche(Board, joueurActif, joueurPassif, nouveauJeton);
+    captureHaut(Board, joueurActif, joueurPassif, nouveauJeton);
+    captureBas(Board, joueurActif, joueurPassif, nouveauJeton);
 }
 
 void captureDroite(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, Jeton nouveauJeton)
@@ -189,5 +191,51 @@ void captureGauche(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, 
     {
         Board[posY][posX]->color[0] = (&joueurActif)->color[0];
         posX += 1;
+    }
+}
+
+void captureHaut(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, Jeton nouveauJeton)
+{
+    int posY = (&nouveauJeton)->y;
+    int posX = (&nouveauJeton)->x;
+    int nbJetonsACapturer = 0;
+
+    if (Board[posY + 1][posX])
+    {
+        while (Board[posY + 1][posX]->color[0] == (&joueurPassif)->color[0])
+        {
+
+            nbJetonsACapturer += 1;
+            posY += 1;
+        }
+    };
+
+    for (int i = 0; i < nbJetonsACapturer; i++)
+    {
+        Board[posY][posX]->color[0] = (&joueurActif)->color[0];
+        posY += 1;
+    }
+}
+
+void captureBas(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, Jeton nouveauJeton)
+{
+    int posY = (&nouveauJeton)->y;
+    int posX = (&nouveauJeton)->x;
+    int nbJetonsACapturer = 0;
+
+    if (Board[posY - 1][posX])
+    {
+        while (Board[posY - 1][posX]->color[0] == (&joueurPassif)->color[0])
+        {
+
+            nbJetonsACapturer += 1;
+            posY -= 1;
+        }
+    };
+
+    for (int i = 0; i < nbJetonsACapturer; i++)
+    {
+        Board[posY][posX]->color[0] = (&joueurActif)->color[0];
+        posY += 1;
     }
 }
