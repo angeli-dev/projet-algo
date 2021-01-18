@@ -1,3 +1,4 @@
+void initBoard(Jeton *Board[8][8],Joueur j1,Joueur j2);
 void displayBoard(Jeton *Board[8][8]);
 void initJoueur(Jeu *jeu, Joueur *j1, Joueur *j2);
 Jeton *initJeton(Jeton *Board[8][8], Joueur joueurActif, int posY, int posX);
