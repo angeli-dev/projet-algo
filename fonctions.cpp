@@ -6,7 +6,6 @@ using namespace std;
 
 void displayBoard(Jeton *Board[8][8])
 {
-
     cout << "     ---PLATEAU ACTUEL---" << endl;
     cout << "     A   B   C   D   E   F   G   H" << endl;
     for (int row = 0; row < 8; row++)
@@ -47,94 +46,97 @@ Jeton *initJeton(Jeton *Board[8][8], Joueur joueurActif, int posY, int posX)
     nouveauJeton->x = posX;
     nouveauJeton->y = posY;
     nouveauJeton->color[0] = (&joueurActif)->color[0];
-    //placer  jeton
+
+    //placer le jeton
     Board[nouveauJeton->y][nouveauJeton->x] = nouveauJeton;
     return nouveauJeton;
 }
 
 Jeton *nouveauJeton(Jeton *Board[8][8], Joueur joueurActif) //ajouter la paramètre Joueur Joueur pour la couleur du jeton
 {
-    Jeton *nouveauJeton = (Jeton *)malloc(sizeof(*nouveauJeton));
+
     char pos[2];
+    int posX, posY;
 
     //nombre de pions du joueur actuel+1
     (&joueurActif)->nbJetons += 1;
+
     //demande placement jeton
     cout << "Ou voulez vous placez votre jeton : (Ex: B4, G2...) ";
     cin >> pos;
+
     //Position X
     if (pos[0] == 'A' || pos[0] == 'a')
     {
-        nouveauJeton->x = 0;
+        posX = 0;
     }
     else if (pos[0] == 'B' || pos[0] == 'b')
     {
-        nouveauJeton->x = 1;
+        posX = 1;
     }
     else if (pos[0] == 'C' || pos[0] == 'c')
     {
-        nouveauJeton->x = 2;
+        posX = 2;
     }
     else if (pos[0] == 'D' || pos[0] == 'd')
     {
-        nouveauJeton->x = 3;
+        posX = 3;
     }
     else if (pos[0] == 'E' || pos[0] == 'e')
     {
-        nouveauJeton->x = 4;
+        posX = 4;
     }
     else if (pos[0] == 'F' || pos[0] == 'f')
     {
-        nouveauJeton->x = 5;
+        posX = 5;
     }
     else if (pos[0] == 'G' || pos[0] == 'g')
     {
-        nouveauJeton->x = 6;
+        posX = 6;
     }
     else if (pos[0] == 'H' || pos[0] == 'h')
     {
-        nouveauJeton->x = 7;
+        posX = 7;
     }
+
     //Position Y
     if (pos[1] == '1')
     {
-        nouveauJeton->y = 0;
+        posY = 0;
     }
     else if (pos[1] == '2')
     {
-        nouveauJeton->y = 1;
+        posY = 1;
     }
     else if (pos[1] == '3')
     {
-        nouveauJeton->y = 2;
+        posY = 2;
     }
     else if (pos[1] == '4')
     {
-        nouveauJeton->y = 3;
+        posY = 3;
     }
     else if (pos[1] == '5')
     {
-        nouveauJeton->y = 4;
+        posY = 4;
     }
     else if (pos[1] == '6')
     {
-        nouveauJeton->y = 5;
+        posY = 5;
     }
     else if (pos[1] == '7')
     {
-        nouveauJeton->y = 6;
+        posY = 6;
     }
     else if (pos[1] == '8')
     {
-        nouveauJeton->y = 7;
+        posY = 7;
     }
 
-    //détermine couleur jeton en fonction du joueur actuel
-    nouveauJeton->color[0] = (&joueurActif)->color[0];
+    //creer et place le nouveau jeton
+    Jeton *nouveauJeton = initJeton(Board, joueurActif, posX, posY);
 
-    //place le jeton dans le tableau
-    Board[nouveauJeton->y][nouveauJeton->x] = nouveauJeton;
-
+    //retourne le nouveau jeton
     return nouveauJeton;
 }
 
