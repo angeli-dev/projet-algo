@@ -99,7 +99,6 @@ Jeton *initJeton(Jeton *Board[8][8], Joueur joueurActif, int posY, int posX)
     //Récupérer couleur du joueur
     nouveauJeton->color[0] = (&joueurActif)->color[0];
     //Placer  jeton
-
     Board[nouveauJeton->y][nouveauJeton->x] = nouveauJeton;
     return nouveauJeton;
 }
@@ -114,14 +113,14 @@ void nouveauTour(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif)
     displayBoard(Board);
 }
 
-Jeton *nouveauJeton(Jeton *Board[8][8], Joueur joueurActif)
+Jeton *nouveauJeton(Jeton *Board[8][8], Joueur *joueurActif)
 {
     char pos[2];
     int posX, posY;
 
     //Anonce du joueur
-    cout << "C'est au tour de " << (&joueurActif)->name << " de jouer" << endl;
-    cout << "Nombre de jetons : " << (&joueurActif)->nbJetons << endl;
+    cout << "C'est au tour de " << joueurActif->name << " de jouer" << endl;
+    cout << "Nombre de jetons : " << joueurActif->nbJetons << endl;
     //demande placement jeton
     cout << "Ou voulez vous placez votre jeton : (Ex: B4, G2...) ";
     cin >> pos;
@@ -193,8 +192,8 @@ Jeton *nouveauJeton(Jeton *Board[8][8], Joueur joueurActif)
     {
         posY = 7;
     }
-    (&joueurActif)->nbJetons += 1;
-    return initJeton(Board, joueurActif, posY, posX);
+    joueurActif->nbJetons += 1;
+    return initJeton(Board, *joueurActif, posY, posX);
 }
 
 void casesJouables(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif)
