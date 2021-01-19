@@ -393,13 +393,15 @@ void captureDiagonaleGH(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPas
         posX += 1;
         posY += 1;
     }
-    int finPartie(Joueur j1, Joueur j2)
+}
+int finPartie(Joueur j1, Joueur j2)
+{
+    if (j1.nbJetons == 0 || j2.nbJetons == 0)
     {
-        if (j1.nbJetons == 0 || j2.nbJetons == 0)
-        {
-            return 1;
-        }
-        else
-        {
-            return 0;
-        }
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
