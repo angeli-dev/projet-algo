@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
     //fonction joueur actuel (par defaut j1)
     while (1) //réalise 2 tours de jeux ?
     {
-        nouveauTour((&jeu1)->Board, j1, j2);
+        nouveauTour((&jeu1)->Board, &j1, j2);
     }
     return 0;
 }
