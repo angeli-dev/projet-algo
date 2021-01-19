@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstdio>
 using namespace std;
+#include <cstring>
 #include "structure.h"
 #include "appelFonctions.h"
 
@@ -78,10 +79,10 @@ void nouveauTour(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif)
 {
     casesJouables(Board, joueurActif, joueurPassif);
     Jeton *jeton = nouveauJeton(Board, joueurActif);
-    displayBoard(Board);
 
     //capture
     captureJetons(Board, joueurActif, joueurPassif, *jeton);
+    displayBoard(Board);
 }
 
 Jeton *nouveauJeton(Jeton *Board[8][8], Joueur joueurActif)
@@ -174,33 +175,289 @@ Jeton *nouveauJeton(Jeton *Board[8][8], Joueur joueurActif)
 
 void casesJouables(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif)
 {
+    cout << "-----------------------------------------------------------" << endl;
+    cout << "Cases jouables : ";
     for (int row = 0; row < 8; row++)
     {
         for (int col = 0; col < 8; col++)
         {
-
-            if (Board[row][col] != NULL)
+            if (Board[row][col] == NULL) // la case est libre
             {
-                cout << "in if" << row << col << endl;
-
-                testDroite(Board, joueurActif, joueurPassif, row, col);
+                /*---TEST POUR UNE CAPTURE A DROITE--*/
+                if (Board[row][col + 1] && col < 7) //vérifie si la case à droite a un jeton et fait partie du tablau
+                {
+                    if (testDroite(Board, joueurActif, joueurPassif, row, col + 1) == 1)
+                    {
+                        cout << colonneLettre(col) << row + 1 << " ";
+                    }
+                }
+                /*---TEST POUR UNE CAPTURE A GAUCHE--*/
+                if (Board[row][col - 1] && col > 0)
+                {
+                    if (testGauche(Board, joueurActif, joueurPassif, row, col - 1) == 1)
+                    {
+                        cout << colonneLettre(col) << row + 1 << " ";
+                    }
+                }
+                /*---TEST POUR UNE CAPTURE EN BAS--*/
+                if (Board[row + 1][col] && row < 7)
+                {
+                    if (testBas(Board, joueurActif, joueurPassif, row + 1, col) == 1)
+                    {
+                        cout << colonneLettre(col) << row + 1 << " ";
+                    }
+                }
+                /*---TEST POUR UNE CAPTURE EN HAUT--*/
+                if (Board[row - 1][col] && row > 0)
+                {
+                    if (testHaut(Board, joueurActif, joueurPassif, row - 1, col) == 1)
+                    {
+                        cout << colonneLettre(col) << row + 1 << " ";
+                    }
+                }
+                /*---TEST POUR UNE CAPTURE EN DIAGONALE DROITE HAUT--*/
+                if (Board[row - 1][col + 1] && row > 0 && col < 7)
+                {
+                    if (testDiagonaleDH(Board, joueurActif, joueurPassif, row - 1, col + 1) == 1)
+                    {
+                        cout << colonneLettre(col) << row + 1 << " ";
+                    }
+                }
+                /*---TEST POUR UNE CAPTURE EN DIAGONALE GAUCHE HAUT--*/
+                if (Board[row - 1][col - 1] && row > 0 && col > 0)
+                {
+                    if (testDiagonaleGH(Board, joueurActif, joueurPassif, row - 1, col - 1) == 1)
+                    {
+                        cout << colonneLettre(col) << row + 1 << " ";
+                    }
+                }
+                /*---TEST POUR UNE CAPTURE EN DIAGONALE GAUCHE BAS--*/
+                if (Board[row + 1][col - 1] && row < 7 && col > 0)
+                {
+                    if (testDiagonaleGB(Board, joueurActif, joueurPassif, row + 1, col - 1) == 1)
+                    {
+                        cout << colonneLettre(col) << row + 1 << " ";
+                    }
+                }
+                /*---TEST POUR UNE CAPTURE EN DIAGONALE DROITE BAS--*/
+                if (Board[row + 1][col + 1] && row < 7 && col < 7)
+                {
+                    if (testDiagonaleDB(Board, joueurActif, joueurPassif, row + 1, col + 1) == 1)
+                    {
+                        cout << colonneLettre(col) << row + 1 << " ";
+                    }
+                }
             }
         }
     }
+    cout << endl;
+    cout << "-----------------------------------------------------------" << endl;
 }
 
-void testDroite(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, int posY, int posX)
+char colonneLettre(int n)
 {
-    //int nbJetonsACapturer = 0;
-    if (Board[posY][posX + 1])
+    char lettre[1];
+    if (n == 0)
     {
-        if (Board[posY][posX + 1]->color[0] == (&joueurPassif)->color[0]) //condition 1 => pion adverse à côté
-        {
-
-            cout << "coucou" << endl;
-            //cout << "in test" << posX << posY << endl;
-        }
+        lettre[0] = 'A';
     }
+    else if (n == 1)
+    {
+        lettre[0] = 'B';
+    }
+    else if (n == 2)
+    {
+        lettre[0] = 'C';
+    }
+    else if (n == 3)
+    {
+        lettre[0] = 'D';
+    }
+    else if (n == 4)
+    {
+        lettre[0] = 'E';
+    }
+    else if (n == 5)
+    {
+        lettre[0] = 'F';
+    }
+    else if (n == 6)
+    {
+        lettre[0] = 'G';
+    }
+    else if (n == 7)
+    {
+        lettre[0] = 'H';
+    }
+    return *lettre;
+}
+
+int testDroite(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, int posY, int posX)
+{
+    int nbJetonsACapturer = 0;
+
+    while (Board[posY][posX]->color[0] == (&joueurPassif)->color[0])
+    {
+        nbJetonsACapturer += 1;
+
+        posX += 1;
+        if (Board[posY][posX] == NULL)
+        {
+            nbJetonsACapturer = 0;
+            return 0;
+        };
+        if (Board[posY][posX]->color[0] == (&joueurActif)->color[0])
+        {
+            return 1;
+        };
+    }
+    return 0;
+}
+
+int testGauche(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, int posY, int posX)
+{
+    int nbJetonsACapturer = 0;
+
+    while (Board[posY][posX]->color[0] == (&joueurPassif)->color[0])
+    {
+        nbJetonsACapturer += 1;
+        posX -= 1;
+        if (Board[posY][posX] == NULL)
+        {
+            nbJetonsACapturer = 0;
+            return 0;
+        };
+        if (Board[posY][posX]->color[0] == (&joueurActif)->color[0])
+        {
+            return 1;
+        };
+    }
+    return 0;
+}
+
+int testBas(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, int posY, int posX)
+{
+    int nbJetonsACapturer = 0;
+
+    while (Board[posY][posX]->color[0] == (&joueurPassif)->color[0])
+    {
+        nbJetonsACapturer += 1;
+        posY += 1;
+        if (Board[posY][posX] == NULL)
+        {
+            nbJetonsACapturer = 0;
+            return 0;
+        };
+        if (Board[posY][posX]->color[0] == (&joueurActif)->color[0])
+        {
+            return 1;
+        };
+    }
+    return 0;
+}
+int testHaut(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, int posY, int posX)
+{
+    int nbJetonsACapturer = 0;
+
+    while (Board[posY][posX]->color[0] == (&joueurPassif)->color[0])
+    {
+        nbJetonsACapturer += 1;
+        posY -= 1;
+        if (Board[posY][posX] == NULL)
+        {
+            nbJetonsACapturer = 0;
+            return 0;
+        };
+        if (Board[posY][posX]->color[0] == (&joueurActif)->color[0])
+        {
+            return 1;
+        };
+    }
+    return 0;
+}
+int testDiagonaleDH(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, int posY, int posX)
+{
+    int nbJetonsACapturer = 0;
+
+    while (Board[posY][posX]->color[0] == (&joueurPassif)->color[0])
+    {
+        nbJetonsACapturer += 1;
+        posX += 1;
+        posY -= 1;
+        if (Board[posY][posX] == NULL)
+        {
+            nbJetonsACapturer = 0;
+            return 0;
+        };
+        if (Board[posY][posX]->color[0] == (&joueurActif)->color[0])
+        {
+            return 1;
+        };
+    }
+    return 0;
+}
+int testDiagonaleGH(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, int posY, int posX)
+{
+    int nbJetonsACapturer = 0;
+
+    while (Board[posY][posX]->color[0] == (&joueurPassif)->color[0])
+    {
+        nbJetonsACapturer += 1;
+        posY -= 1;
+        posX -= 1;
+        if (Board[posY][posX] == NULL)
+        {
+            nbJetonsACapturer = 0;
+            return 0;
+        };
+        if (Board[posY][posX]->color[0] == (&joueurActif)->color[0])
+        {
+            return 1;
+        };
+    }
+    return 0;
+}
+int testDiagonaleGB(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, int posY, int posX)
+{
+    int nbJetonsACapturer = 0;
+
+    while (Board[posY][posX]->color[0] == (&joueurPassif)->color[0])
+    {
+        nbJetonsACapturer += 1;
+        posY += 1;
+        posX -= 1;
+        if (Board[posY][posX] == NULL)
+        {
+            nbJetonsACapturer = 0;
+            return 0;
+        };
+        if (Board[posY][posX]->color[0] == (&joueurActif)->color[0])
+        {
+            return 1;
+        };
+    }
+    return 0;
+}
+int testDiagonaleDB(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, int posY, int posX)
+{
+    int nbJetonsACapturer = 0;
+
+    while (Board[posY][posX]->color[0] == (&joueurPassif)->color[0])
+    {
+        nbJetonsACapturer += 1;
+        posY += 1;
+        posX += 1;
+        if (Board[posY][posX] == NULL)
+        {
+            nbJetonsACapturer = 0;
+            return 0;
+        };
+        if (Board[posY][posX]->color[0] == (&joueurActif)->color[0])
+        {
+            return 1;
+        };
+    }
+    return 0;
 }
 
 void captureJetons(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, Jeton nouveauJeton)
