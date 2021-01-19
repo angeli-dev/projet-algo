@@ -54,6 +54,7 @@ void initJoueur(Jeu *jeu)
     {
         cout << "Quel est le nom du premier joueur : ";
         cin >> jou1->name;
+        cout << jou1->name;
         cout << "Quel est le nom du second joueur : ";
         cin >> jou2->name;
         int verif = strcmp(jou1->name, jou2->name);
@@ -87,8 +88,8 @@ void initJoueur(Jeu *jeu)
             break;
         }
     }
-    jeu->j1 = *jou1;
-    jeu->j2 = *jou2;
+    (jeu)->j1 = *jou1;
+    (jeu)->j2 = *jou2;
 }
 
 Jeton *initJeton(Jeton *Board[8][8], Joueur joueurActif, int posY, int posX)
@@ -107,7 +108,7 @@ void nouveauTour(Jeton *Board[8][8], Joueur *joueurActif, Joueur joueurPassif)
 {
     casesJouables(Board, *joueurActif, joueurPassif);
     Jeton *jeton = nouveauJeton(Board, joueurActif);
-
+    cout << "coucou " << (joueurActif)->name << " de jouer" << endl;
     //capture
     captureJetons(Board, *joueurActif, joueurPassif, *jeton);
     displayBoard(Board);
@@ -119,8 +120,8 @@ Jeton *nouveauJeton(Jeton *Board[8][8], Joueur *joueurActif)
     int posX, posY;
 
     //Anonce du joueur
-    cout << "C'est au tour de " << joueurActif->name << " de jouer" << endl;
-    cout << "Nombre de jetons : " << joueurActif->nbJetons << endl;
+    cout << "C'est au tour de " << (joueurActif)->name << " de jouer" << endl;
+    cout << "Nombre de jetons : " << (joueurActif)->nbJetons << endl;
     //demande placement jeton
     cout << "Ou voulez vous placez votre jeton : (Ex: B4, G2...) ";
     cin >> pos;
@@ -192,7 +193,7 @@ Jeton *nouveauJeton(Jeton *Board[8][8], Joueur *joueurActif)
     {
         posY = 7;
     }
-    joueurActif->nbJetons += 1;
+    (joueurActif)->nbJetons += 1;
     return initJeton(Board, *joueurActif, posY, posX);
 }
 
