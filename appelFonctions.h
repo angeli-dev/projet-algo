@@ -11,6 +11,18 @@ Jeton *initJeton(Jeton *Board[8][8], Joueur joueurActif, int posY, int posX);
 //partie
 Jeton *nouveauJeton(Jeton *Board[8][8], Joueur joueurActif);
 void nouveauTour(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif);
+void casesJouables(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif);
+char colonneLettre(int n);
+
+//fonctions test
+int testDroite(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, int posY, int posX);
+int testGauche(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, int posY, int posX);
+int testHaut(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, int posY, int posX);
+int testBas(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, int posY, int posX);
+int testDiagonaleDB(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, int posY, int posX);
+int testDiagonaleGB(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, int posY, int posX);
+int testDiagonaleDH(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, int posY, int posX);
+int testDiagonaleGH(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, int posY, int posX);
 
 //fonctions capture
 void captureJetons(Jeton *Board[8][8], Joueur joueurActif, Joueur Passif, Jeton nouveauJeton);
