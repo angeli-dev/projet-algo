@@ -106,7 +106,7 @@ Jeton *initJeton(Jeton *Board[8][8], Joueur joueurActif, int posY, int posX)
 void nouveauTour(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif)
 {
     casesJouables(Board, joueurActif, joueurPassif);
-    Jeton *jeton = nouveauJeton(Board, joueurActif);
+    Jeton *jeton = nouveauJeton(Board, &joueurActif);
 
     //capture
     captureJetons(Board, joueurActif, joueurPassif, *jeton);
