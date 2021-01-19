@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstdio>
+#include <string.h>
 using namespace std;
 #include "structure.h"
 #include "appelFonctions.h"
@@ -43,21 +44,48 @@ void displayBoard(Jeton *Board[8][8])
     cout << "   +---+---+---+---+---+---+---+---+" << endl;
 }
 
-void initJoueur(Jeu *jeu, Joueur *j1, Joueur *j2)
+void initJoueur(Jeu *jeu)
 {
-    cout << "Quel est le nom du premier joueur : ";
-    cin >> j1->name;
-    cout << "Choisisez votre couleur : ";
-    cin >> j1->color;
-    j1->nbJetons = 2;
-    jeu->j1 = *j1;
+    Joueur *jou1 = (Joueur *)malloc(sizeof(*jou1));
+    Joueur *jou2 = (Joueur *)malloc(sizeof(*jou2));
+    while (1)
+    {
+        cout << "Quel est le nom du premier joueur : ";
+        cin >> jou1->name;
+        cout << "Quel est le nom du second joueur : ";
+        cin >> jou2->name;
+        int verif = strcmp(jou1->name,jou2->name);
+        if (!verif)
+        {
+            cout << "Les deux noms sont identiques. Veuillez en prendre des différents." << endl;
+        }
+        else
+        {
+            break;
+        }
+    }
+    
+    //Initialisation du nombre de jetons
+    jou1->nbJetons = 2;
+    jou2->nbJetons = 2;
 
-    cout << "Quel est le nom du second joueur : ";
-    cin >> j2->name;
-    cout << "Choisisez votre couleur : ";
-    cin >> j2->color;
-    j2->nbJetons = 2;
-    jeu->j2 = *j2;
+    //Initialisation de la couleur et vérification que les deux sont bien différentes
+    while (1)
+    {
+        cout << "Joueur 1 choisisez votre couleur : ";
+        cin >> jou1->color;
+        cout << "Joueur 2 choisisez votre couleur : ";
+        cin >> jou2->color;
+        if (jou1->color[0] == jou2->color[0])
+        {
+            cout << "Les deux couleurs sont identiques. Veuillez en prendre des différentes." << endl;
+        }
+        else {
+            break;
+        }
+    }
+    jeu->j1 = *jou1;
+    jeu->j2 = *jou2;
 }
 
 Jeton *initJeton(Jeton *Board[8][8], Joueur joueurActif, int posY, int posX)
@@ -72,10 +100,13 @@ Jeton *initJeton(Jeton *Board[8][8], Joueur joueurActif, int posY, int posX)
     return nouveauJeton;
 }
 
-Jeton *nouveauJeton(Jeton *Board[8][8], Joueur joueurActif) //ajouter la paramètre Joueur Joueur pour la couleur du jeton
+Jeton *nouveauJeton(Jeton *Board[8][8], Joueur *joueurActif) //ajouter la paramètre Joueur Joueur pour la couleur du jeton
 {
     char pos[2];
     int x,y;
+    //Anonce du joueur
+    cout << "C'est au tour de " << joueurActif->name << " de jouer" << endl;
+    cout << "Nombre de jetons : " << joueurActif->nbJetons << endl;
     //demande placement jeton
     cout << "Ou voulez vous placez votre jeton : (Ex: B4, G2...) ";
     cin >> pos;
@@ -145,9 +176,8 @@ Jeton *nouveauJeton(Jeton *Board[8][8], Joueur joueurActif) //ajouter la paramè
     {
         y = 7;
     }
-    //nombre de pions du joueur actuel+1
-    (&joueurActif)->nbJetons += 1;
-    return initJeton(Board,joueurActif,y,x);
+    joueurActif->nbJetons += 1;
+    return initJeton(Board,*joueurActif,y,x);
 }
 
 void captureJetons(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, Jeton nouveauJeton)
@@ -201,6 +231,12 @@ void captureGauche(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, 
         posX += 1;
     }
 }
-int finPartie(){
-    return 0;
+int finPartie(Joueur j1,Joueur j2){
+    if (j1.nbJetons == 0 || j2.nbJetons == 0)
+    {
+        return 1;
+    }
+    else {
+        return 0;
+    }
 }
