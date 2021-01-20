@@ -1,12 +1,10 @@
 #include <iostream>
 #include "structure.h"
 #include "appelFonctions.h"
-
 using namespace std;
 
 int main(int argc, char *argv[])
 {
-
     Jeu jeu1;
     Joueur j1, j2;
     //initialise les joueurs
@@ -16,11 +14,12 @@ int main(int argc, char *argv[])
     initBoard((&jeu1)->Board,j1,j2);
     displayBoard((&jeu1)->Board);
     //fonction joueur actuel (par defaut j1)
-    while (1)
+    while (finPartie(j1,j2))
     {
-        nouveauJeton((&jeu1)->Board, &j1);
-        displayBoard((&jeu1)->Board);
+        cout << j2.nbJetons << endl;
+        nouveauTour((&jeu1)->Board, &j1, j2);
+        joueurSuivant(&j1,&j2);
     }
-    //captureJetons((&jeu1)->Board, j1, j2, jeton);
+    resultatsJeu(j1,j2);
     return 0;
 }
