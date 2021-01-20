@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cstdio>
 #include <cstring>
-#include <string.h>
+//#include <string.h>
 using namespace std;
 
 #include "structure.h"
@@ -106,7 +106,9 @@ Jeton *initJeton(Jeton *Board[8][8], Joueur joueurActif, int posY, int posX)
 
 void nouveauTour(Jeton *Board[8][8], Joueur *joueurActif, Joueur joueurPassif)
 {
-    casesJouables(Board, *joueurActif, joueurPassif);
+    char *tableau[60];
+    casesJouables(Board, *joueurActif, joueurPassif, tableau);
+    //cout << "tableau 01 :" << (tableau[1])->x;
     Jeton *jeton = nouveauJeton(Board, joueurActif);
     //capture
     captureJetons(Board, *joueurActif, joueurPassif, *jeton);
@@ -203,10 +205,13 @@ Jeton *nouveauJeton(Jeton *Board[8][8], Joueur *joueurActif)
     return initJeton(Board, *joueurActif, posY, posX);
 }
 
-void casesJouables(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif)
+void casesJouables(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, char *tableauJouables[60])
 {
     cout << "-----------------------------------------------------------" << endl;
     cout << "Cases jouables : ";
+
+    int x = 0;
+
     for (int row = 0; row < 8; row++)
     {
         for (int col = 0; col < 8; col++)
@@ -219,6 +224,10 @@ void casesJouables(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif)
                     if (testDroite(Board, joueurActif, joueurPassif, row, col + 1) == 1)
                     {
                         cout << colonneLettre(col) << row + 1 << " ";
+                        // tableauJouables[x] = colonneLettre(col);
+                        *tableauJouables[x] = row;
+                        cout << tableauJouables[x] << " ";
+                        x += 1;
                     }
                 }
                 /*---TEST POUR UNE CAPTURE A GAUCHE--*/
@@ -227,6 +236,9 @@ void casesJouables(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif)
                     if (testGauche(Board, joueurActif, joueurPassif, row, col - 1) == 1)
                     {
                         cout << colonneLettre(col) << row + 1 << " ";
+                        tableauJouables[x][0] = colonneLettre(col);
+                        tableauJouables[x][1] = row;
+                        x += 1;
                     }
                 }
                 /*---TEST POUR UNE CAPTURE EN BAS--*/
@@ -235,6 +247,9 @@ void casesJouables(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif)
                     if (testBas(Board, joueurActif, joueurPassif, row + 1, col) == 1)
                     {
                         cout << colonneLettre(col) << row + 1 << " ";
+                        tableauJouables[x][0] = colonneLettre(col);
+                        tableauJouables[x][1] = row;
+                        x += 1;
                     }
                 }
                 /*---TEST POUR UNE CAPTURE EN HAUT--*/
@@ -243,6 +258,9 @@ void casesJouables(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif)
                     if (testHaut(Board, joueurActif, joueurPassif, row - 1, col) == 1)
                     {
                         cout << colonneLettre(col) << row + 1 << " ";
+                        tableauJouables[x][0] = colonneLettre(col);
+                        tableauJouables[x][1] = row;
+                        x += 1;
                     }
                 }
                 /*---TEST POUR UNE CAPTURE EN DIAGONALE DROITE HAUT--*/
@@ -251,14 +269,21 @@ void casesJouables(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif)
                     if (testDiagonaleDH(Board, joueurActif, joueurPassif, row - 1, col + 1) == 1)
                     {
                         cout << colonneLettre(col) << row + 1 << " ";
+                        tableauJouables[x][0] = colonneLettre(col);
+                        tableauJouables[x][1] = row;
+                        x += 1;
                     }
                 }
+
                 /*---TEST POUR UNE CAPTURE EN DIAGONALE GAUCHE HAUT--*/
                 if (Board[row - 1][col - 1] && row > 0 && col > 0)
                 {
                     if (testDiagonaleGH(Board, joueurActif, joueurPassif, row - 1, col - 1) == 1)
                     {
                         cout << colonneLettre(col) << row + 1 << " ";
+                        tableauJouables[x][0] = colonneLettre(col);
+                        tableauJouables[x][1] = row;
+                        x += 1;
                     }
                 }
                 /*---TEST POUR UNE CAPTURE EN DIAGONALE GAUCHE BAS--*/
@@ -267,6 +292,9 @@ void casesJouables(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif)
                     if (testDiagonaleGB(Board, joueurActif, joueurPassif, row + 1, col - 1) == 1)
                     {
                         cout << colonneLettre(col) << row + 1 << " ";
+                        tableauJouables[x][0] = colonneLettre(col);
+                        tableauJouables[x][1] = row;
+                        x += 1;
                     }
                 }
                 /*---TEST POUR UNE CAPTURE EN DIAGONALE DROITE BAS--*/
@@ -275,6 +303,9 @@ void casesJouables(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif)
                     if (testDiagonaleDB(Board, joueurActif, joueurPassif, row + 1, col + 1) == 1)
                     {
                         cout << colonneLettre(col) << row + 1 << " ";
+                        tableauJouables[x][0] = colonneLettre(col);
+                        tableauJouables[x][1] = row;
+                        x += 1;
                     }
                 }
             }
@@ -282,6 +313,7 @@ void casesJouables(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif)
     }
     cout << endl;
     cout << "-----------------------------------------------------------" << endl;
+    // cout << "tableau 00 :" << (tableauJouables[1])->x;
 }
 
 char colonneLettre(int n)

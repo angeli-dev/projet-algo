@@ -12,7 +12,7 @@ Jeton *initJeton(Jeton *Board[8][8], Joueur joueurActif, int posY, int posX);
 Jeton *nouveauJeton(Jeton *Board[8][8], Joueur *joueurActif);
 void nouveauTour(Jeton *Board[8][8], Joueur *joueurActif, Joueur joueurPassif);
 void joueurSuivant(Joueur *j1, Joueur *j2);
-void casesJouables(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif);
+void casesJouables(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, char *tableauJouables[60]);
 char colonneLettre(int n);
 
 //fonctions test
