@@ -1,8 +1,9 @@
 #include <iostream>
 #include <cstdio>
+#include <cstring>
 #include <string.h>
 using namespace std;
-#include <cstring>
+
 #include "structure.h"
 #include "appelFonctions.h"
 
@@ -67,7 +68,6 @@ void initJoueur(Jeu *jeu)
             break;
         }
     }
-
     //Initialisation du nombre de jetons
     jou1->nbJetons = 2;
     jou2->nbJetons = 2;
@@ -111,6 +111,13 @@ void nouveauTour(Jeton *Board[8][8], Joueur *joueurActif, Joueur joueurPassif)
     //capture
     captureJetons(Board, *joueurActif, joueurPassif, *jeton);
     displayBoard(Board);
+}
+
+void joueurSuivant(Joueur *j1, Joueur *j2)
+{
+    Joueur temps = *j1;
+    *j1 = *j2;
+    *j2 = temps;
 }
 
 Jeton *nouveauJeton(Jeton *Board[8][8], Joueur *joueurActif)
@@ -659,10 +666,25 @@ int finPartie(Joueur j1, Joueur j2)
 {
     if (j1.nbJetons == 0 || j2.nbJetons == 0)
     {
-        return 1;
+        return 0;
     }
     else
     {
-        return 0;
+        return 1;
+    }
+}
+void resultatsJeu(Joueur j1, Joueur j2)
+{
+    if (j1.nbJetons > j2.nbJetons)
+    {
+        cout << j1.name << " a gagne la partie ! " << endl;
+    }
+    else if (j1.nbJetons < j2.nbJetons)
+    {
+        cout << j2.name << " a gagne la partie ! " << endl;
+    }
+    else
+    {
+        cout << "Egalite entre les deux joueurs ! " << endl;
     }
 }
