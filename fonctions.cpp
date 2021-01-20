@@ -54,8 +54,8 @@ void initJoueur(Jeu *jeu)
     {
         cout << "Quel est le nom du premier joueur : ";
         cin >> jou1->name;
-        cout << jou1->name;
-        cout << "Quel est le nom du second joueur : ";
+        cout
+            << "Quel est le nom du second joueur : ";
         cin >> jou2->name;
         int verif = strcmp(jou1->name, jou2->name);
         if (!verif)
@@ -108,7 +108,6 @@ void nouveauTour(Jeton *Board[8][8], Joueur *joueurActif, Joueur joueurPassif)
 {
     casesJouables(Board, *joueurActif, joueurPassif);
     Jeton *jeton = nouveauJeton(Board, joueurActif);
-    cout << "coucou " << (joueurActif)->name << " de jouer" << endl;
     //capture
     captureJetons(Board, *joueurActif, joueurPassif, *jeton);
     displayBoard(Board);
@@ -614,6 +613,7 @@ void captureDiagonaleDB(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPas
 }
 void captureDiagonaleDH(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, Jeton nouveauJeton)
 {
+    cout << "coucou";
     int posY = (&nouveauJeton)->y;
     int posX = (&nouveauJeton)->x;
     int nbJetonsACapturer = 0;

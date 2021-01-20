@@ -7,8 +7,8 @@ typedef struct Jeton
 
 typedef struct Joueur
 {
-    char color[1];
     char name[20];
+    char color[1];
     int nbJetons;
 } joueur;
 
