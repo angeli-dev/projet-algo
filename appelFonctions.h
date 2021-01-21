@@ -10,7 +10,7 @@ Jeton *initJeton(Jeton *Board[8][8], Joueur joueurActif, int posY, int posX);
 
 //partie
 Jeton *nouveauJeton(Jeton *Board[8][8], Joueur *joueurActif, Jeton *tableauJouables[30]);
-void nouveauTour(Jeton *Board[8][8], Joueur *joueurActif, Joueur joueurPassif);
+void nouveauTour(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif);
 void joueurSuivant(Joueur *j1, Joueur *j2);
 void casesJouables(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, Jeton *tableauJouables[30]);
 char colonneLettre(int n);

@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
     while (finPartie(j1, j2))
     {
         cout << j2.nbJetons << endl;
-        nouveauTour((&jeu1)->Board, &j1, j2);
+        nouveauTour((&jeu1)->Board, j1, j2);
         joueurSuivant(&j1, &j2);
     }
     resultatsJeu(j1, j2);
