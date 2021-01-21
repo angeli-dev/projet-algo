@@ -7,6 +7,7 @@ using namespace std;
 #include "structure.h"
 #include "appelFonctions.h"
 
+//initialise le plateau de jeu
 void initBoard(Jeton *Board[8][8], Joueur j1, Joueur j2)
 {
     int i(0), j(0);
@@ -23,6 +24,8 @@ void initBoard(Jeton *Board[8][8], Joueur j1, Joueur j2)
     initJeton(Board, j2, 4, 3);
     initJeton(Board, j1, 4, 4);
 }
+
+//affiche le plateau de jeu
 void displayBoard(Jeton *Board[8][8])
 {
     cout << "          ---PLATEAU ACTUEL---" << endl;
@@ -47,6 +50,7 @@ void displayBoard(Jeton *Board[8][8])
     cout << "   +---+---+---+---+---+---+---+---+" << endl;
 }
 
+//initialise les joueurs du jeu
 void initJoueur(Jeu *jeu)
 {
     Joueur *jou1 = (Joueur *)malloc(sizeof(*jou1));
@@ -92,6 +96,7 @@ void initJoueur(Jeu *jeu)
     (jeu)->j2 = *jou2;
 }
 
+//initaialise un jeton et le place sur la grille
 Jeton *initJeton(Jeton *Board[8][8], Joueur joueurActif, int posY, int posX)
 {
     Jeton *nouveauJeton = (Jeton *)malloc(sizeof(*nouveauJeton));
@@ -104,17 +109,37 @@ Jeton *initJeton(Jeton *Board[8][8], Joueur joueurActif, int posY, int posX)
     return nouveauJeton;
 }
 
+//effectue un tour de jeu
 void nouveauTour(Jeton *Board[8][8], Joueur *joueurActif, Joueur joueurPassif)
 {
-    char *tableau[60];
+    //créé un tableau de cases jouables
+    Jeton *tableau[30];
+    for (int i = 0; i < 30; i++)
+    {
+        tableau[i] = NULL;
+    }
+
+    //remplit le tableau
     casesJouables(Board, *joueurActif, joueurPassif, tableau);
-    //cout << "tableau 01 :" << (tableau[1])->x;
-    Jeton *jeton = nouveauJeton(Board, joueurActif);
-    //capture
-    captureJetons(Board, *joueurActif, joueurPassif, *jeton);
-    displayBoard(Board);
+
+    if (tailleTableau(tableau) == 0) //si le tableau est vide, pas de cases jouables
+    {
+        cout << "aucune" << endl;
+        cout << "Tu passes ton tour" << endl;
+        //fin du tour, passe au joueur suivant
+    }
+    else //il y a des cases jouables
+    {
+        //place le nouveau jeton
+        Jeton *jeton = nouveauJeton(Board, joueurActif, tableau);
+
+        //capture les jetons
+        captureJetons(Board, *joueurActif, joueurPassif, *jeton);
+        displayBoard(Board);
+    }
 }
 
+//définit le joueur actuel
 void joueurSuivant(Joueur *j1, Joueur *j2)
 {
     Joueur temps = *j1;
@@ -122,14 +147,37 @@ void joueurSuivant(Joueur *j1, Joueur *j2)
     *j2 = temps;
 }
 
-Jeton *nouveauJeton(Jeton *Board[8][8], Joueur *joueurActif)
+//récupère les coordonnées du nouveau jeton et les vérifie (s'il s'agit bien d'une case jouable)
+Jeton *nouveauJeton(Jeton *Board[8][8], Joueur *joueurActif, Jeton *tableauJouables[30])
 {
-    char pos[2];
-    int posX, posY;
+
+    int posX = -1;
+    int posY = -1;
 
     //Anonce du joueur
     cout << "C'est au tour de " << (joueurActif)->name << " de jouer" << endl;
     cout << "Nombre de jetons : " << (joueurActif)->nbJetons << endl;
+
+    /*----------TEST VALIDITE JETON--------------------------------*/
+    int validite = 0;
+    while (validite == 0) //tant que le jeton n'est pas jouable
+    {
+        //demande et récupère les coordonnées du jeton
+        coordJeton(&posX, &posY);
+        validite = testJeton(posX, posY, tableauJouables);
+    }
+
+    //ajoute un jeton supplémentaire au nombre de jeton du joueur actif
+    (joueurActif)->nbJetons += 1;
+
+    //place le jeton dans le tableau
+    return initJeton(Board, *joueurActif, posY, posX);
+}
+
+void coordJeton(int *posX, int *posY)
+{
+    char pos[2];
+
     //demande placement jeton
     cout << "Ou voulez vous placez votre jeton : (Ex: B4, G2...) ";
     cin >> pos;
@@ -137,80 +185,114 @@ Jeton *nouveauJeton(Jeton *Board[8][8], Joueur *joueurActif)
     //Position X
     if (pos[0] == 'A' || pos[0] == 'a')
     {
-        posX = 0;
+        *posX = 0;
     }
     else if (pos[0] == 'B' || pos[0] == 'b')
     {
-        posX = 1;
+        *posX = 1;
     }
     else if (pos[0] == 'C' || pos[0] == 'c')
     {
-        posX = 2;
+        *posX = 2;
     }
     else if (pos[0] == 'D' || pos[0] == 'd')
     {
-        posX = 3;
+        *posX = 3;
     }
     else if (pos[0] == 'E' || pos[0] == 'e')
     {
-        posX = 4;
+        *posX = 4;
     }
     else if (pos[0] == 'F' || pos[0] == 'f')
     {
-        posX = 5;
+        *posX = 5;
     }
     else if (pos[0] == 'G' || pos[0] == 'g')
     {
-        posX = 6;
+        *posX = 6;
     }
     else if (pos[0] == 'H' || pos[0] == 'h')
     {
-        posX = 7;
+        *posX = 7;
     }
 
     //Position Y
     if (pos[1] == '1')
     {
-        posY = 0;
+        *posY = 0;
     }
     else if (pos[1] == '2')
     {
-        posY = 1;
+        *posY = 1;
     }
     else if (pos[1] == '3')
     {
-        posY = 2;
+        *posY = 2;
     }
     else if (pos[1] == '4')
     {
-        posY = 3;
+        *posY = 3;
     }
     else if (pos[1] == '5')
     {
-        posY = 4;
+        *posY = 4;
     }
     else if (pos[1] == '6')
     {
-        posY = 5;
+        *posY = 5;
     }
     else if (pos[1] == '7')
     {
-        posY = 6;
+        *posY = 6;
     }
     else if (pos[1] == '8')
     {
-        posY = 7;
+        *posY = 7;
     }
-    (joueurActif)->nbJetons += 1;
-    return initJeton(Board, *joueurActif, posY, posX);
 }
 
-void casesJouables(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, char *tableauJouables[60])
+//test si le jeton est jouable
+int testJeton(int posX, int posY, Jeton *tableauJouables[30])
+{
+    int n = 0;
+    while (tableauJouables[n])
+    {
+        if (tableauJouables[n]->x == posX && tableauJouables[n]->y == posY)
+        {
+            //le jeton est jouable
+            return 1;
+        }
+        n++;
+    }
+    //le jeton n'est pas jouable
+    return 0;
+}
+
+//stocke la case jouable dans un tableau
+void testReussi(int posY, int posX, Jeton *tableauJouables[30])
+{
+    //pointe la dernière case du tableau
+    int n = 0;
+    n = tailleTableau(tableauJouables);
+
+    //affiche la case jouable
+    cout << colonneLettre(posX) << posY + 1 << " ";
+
+    //créé un jeton identique à celui que pourrait jouer le joueur
+    Jeton *nouveauJeton = (Jeton *)malloc(sizeof(*nouveauJeton));
+    nouveauJeton->x = posX;
+    nouveauJeton->y = posY;
+
+    //met la case jouable dans le tableau
+    tableauJouables[n] = nouveauJeton;
+}
+
+/*--------------------------PARCOURS LES CASES DU TABLEAU ET DETERMINE SI ELLE CAPTURE SONT JOUABLES----------------------------------*/
+
+void casesJouables(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, Jeton *tableauJouables[60])
 {
     cout << "-----------------------------------------------------------" << endl;
     cout << "Cases jouables : ";
-
-    int x = 0;
 
     for (int row = 0; row < 8; row++)
     {
@@ -223,11 +305,7 @@ void casesJouables(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, 
                 {
                     if (testDroite(Board, joueurActif, joueurPassif, row, col + 1) == 1)
                     {
-                        cout << colonneLettre(col) << row + 1 << " ";
-                        // tableauJouables[x] = colonneLettre(col);
-                        *tableauJouables[x] = row;
-                        cout << tableauJouables[x] << " ";
-                        x += 1;
+                        testReussi(col, row, tableauJouables);
                     }
                 }
                 /*---TEST POUR UNE CAPTURE A GAUCHE--*/
@@ -235,10 +313,7 @@ void casesJouables(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, 
                 {
                     if (testGauche(Board, joueurActif, joueurPassif, row, col - 1) == 1)
                     {
-                        cout << colonneLettre(col) << row + 1 << " ";
-                        tableauJouables[x][0] = colonneLettre(col);
-                        tableauJouables[x][1] = row;
-                        x += 1;
+                        testReussi(col, row, tableauJouables);
                     }
                 }
                 /*---TEST POUR UNE CAPTURE EN BAS--*/
@@ -246,10 +321,7 @@ void casesJouables(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, 
                 {
                     if (testBas(Board, joueurActif, joueurPassif, row + 1, col) == 1)
                     {
-                        cout << colonneLettre(col) << row + 1 << " ";
-                        tableauJouables[x][0] = colonneLettre(col);
-                        tableauJouables[x][1] = row;
-                        x += 1;
+                        testReussi(col, row, tableauJouables);
                     }
                 }
                 /*---TEST POUR UNE CAPTURE EN HAUT--*/
@@ -257,10 +329,7 @@ void casesJouables(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, 
                 {
                     if (testHaut(Board, joueurActif, joueurPassif, row - 1, col) == 1)
                     {
-                        cout << colonneLettre(col) << row + 1 << " ";
-                        tableauJouables[x][0] = colonneLettre(col);
-                        tableauJouables[x][1] = row;
-                        x += 1;
+                        testReussi(col, row, tableauJouables);
                     }
                 }
                 /*---TEST POUR UNE CAPTURE EN DIAGONALE DROITE HAUT--*/
@@ -268,10 +337,7 @@ void casesJouables(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, 
                 {
                     if (testDiagonaleDH(Board, joueurActif, joueurPassif, row - 1, col + 1) == 1)
                     {
-                        cout << colonneLettre(col) << row + 1 << " ";
-                        tableauJouables[x][0] = colonneLettre(col);
-                        tableauJouables[x][1] = row;
-                        x += 1;
+                        testReussi(col, row, tableauJouables);
                     }
                 }
 
@@ -280,10 +346,7 @@ void casesJouables(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, 
                 {
                     if (testDiagonaleGH(Board, joueurActif, joueurPassif, row - 1, col - 1) == 1)
                     {
-                        cout << colonneLettre(col) << row + 1 << " ";
-                        tableauJouables[x][0] = colonneLettre(col);
-                        tableauJouables[x][1] = row;
-                        x += 1;
+                        testReussi(col, row, tableauJouables);
                     }
                 }
                 /*---TEST POUR UNE CAPTURE EN DIAGONALE GAUCHE BAS--*/
@@ -291,10 +354,7 @@ void casesJouables(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, 
                 {
                     if (testDiagonaleGB(Board, joueurActif, joueurPassif, row + 1, col - 1) == 1)
                     {
-                        cout << colonneLettre(col) << row + 1 << " ";
-                        tableauJouables[x][0] = colonneLettre(col);
-                        tableauJouables[x][1] = row;
-                        x += 1;
+                        testReussi(col, row, tableauJouables);
                     }
                 }
                 /*---TEST POUR UNE CAPTURE EN DIAGONALE DROITE BAS--*/
@@ -302,20 +362,32 @@ void casesJouables(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, 
                 {
                     if (testDiagonaleDB(Board, joueurActif, joueurPassif, row + 1, col + 1) == 1)
                     {
-                        cout << colonneLettre(col) << row + 1 << " ";
-                        tableauJouables[x][0] = colonneLettre(col);
-                        tableauJouables[x][1] = row;
-                        x += 1;
+                        testReussi(col, row, tableauJouables);
                     }
                 }
             }
         }
     }
+
     cout << endl;
     cout << "-----------------------------------------------------------" << endl;
-    // cout << "tableau 00 :" << (tableauJouables[1])->x;
 }
 
+//retourne la taille du tableau passé en paramètre
+int tailleTableau(Jeton *tableauJouables[30])
+{
+    int taille = 0;
+    int i = 0;
+    while (tableauJouables[i] != NULL)
+    {
+
+        taille += 1;
+        i++;
+    }
+    return taille;
+}
+
+//transforme le numéro de la colonne passé en paramètre en lettre
 char colonneLettre(int n)
 {
     char lettre[1];
@@ -353,6 +425,8 @@ char colonneLettre(int n)
     }
     return *lettre;
 }
+
+/*----------------------------------TEST CASES JOUABLES---------------------------------------------------*/
 
 int testDroite(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, int posY, int posX)
 {
@@ -521,6 +595,8 @@ int testDiagonaleDB(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif,
     }
     return 0;
 }
+
+/*----------------------------------CAPTURE JETONS---------------------------------------------------*/
 
 void captureJetons(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, Jeton nouveauJeton)
 {
@@ -694,6 +770,9 @@ void captureDiagonaleGH(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPas
         posY += 1;
     }
 }
+
+/*----------------------------------FIN PARTIE---------------------------------------------------*/
+
 int finPartie(Joueur j1, Joueur j2)
 {
     if (j1.nbJetons == 0 || j2.nbJetons == 0)

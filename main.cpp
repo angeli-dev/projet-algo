@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
     j2 = jeu1.j2;
     initBoard((&jeu1)->Board, j1, j2);
     displayBoard((&jeu1)->Board);
-    //fonction joueur actuel (par defaut j1)
+
     while (finPartie(j1, j2))
     {
         cout << j2.nbJetons << endl;
