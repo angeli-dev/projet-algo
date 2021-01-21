@@ -598,7 +598,7 @@ int testDiagonaleDB(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif,
 
 /*----------------------------------CAPTURE JETONS---------------------------------------------------*/
 
-void captureJetons(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, Jeton nouveauJeton)
+void captureJetons(Jeton *Board[8][8], Joueur *joueurActif, Joueur *joueurPassif, Jeton nouveauJeton)
 {
     captureDroite(Board, joueurActif, joueurPassif, nouveauJeton);
     captureGauche(Board, joueurActif, joueurPassif, nouveauJeton);
@@ -610,7 +610,7 @@ void captureJetons(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, 
     captureDiagonaleGH(Board, joueurActif, joueurPassif, nouveauJeton);
 }
 
-void captureDroite(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, Jeton nouveauJeton)
+void captureDroite(Jeton *Board[8][8], Joueur *joueurActif, Joueur *joueurPassif, Jeton nouveauJeton)
 {
     int posY = (&nouveauJeton)->y;
     int posX = (&nouveauJeton)->x;
@@ -627,9 +627,11 @@ void captureDroite(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, 
         Board[posY][posX]->color[0] = (&joueurActif)->color[0];
         posX -= 1;
     };
+    joueurActif->nbJetons += nbJetonsACapturer;
+    joueurPassif->nbJetons -= nbJetonsACapturer;
 }
 
-void captureGauche(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, Jeton nouveauJeton)
+void captureGauche(Jeton *Board[8][8], Joueur *joueurActif, Joueur *joueurPassif, Jeton nouveauJeton)
 {
     int posY = (&nouveauJeton)->y;
     int posX = (&nouveauJeton)->x;
@@ -646,9 +648,11 @@ void captureGauche(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, 
         Board[posY][posX]->color[0] = (&joueurActif)->color[0];
         posX += 1;
     }
+    joueurActif->nbJetons += nbJetonsACapturer;
+    joueurPassif->nbJetons -= nbJetonsACapturer;
 }
 
-void captureBas(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, Jeton nouveauJeton)
+void captureBas(Jeton *Board[8][8], Joueur *joueurActif, Joueur *joueurPassif, Jeton nouveauJeton)
 {
     int posY = (&nouveauJeton)->y;
     int posX = (&nouveauJeton)->x;
@@ -665,9 +669,11 @@ void captureBas(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, Jet
         Board[posY][posX]->color[0] = (&joueurActif)->color[0];
         posY += 1;
     }
+    joueurActif->nbJetons += nbJetonsACapturer;
+    joueurPassif->nbJetons -= nbJetonsACapturer;
 }
 
-void captureHaut(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, Jeton nouveauJeton)
+void captureHaut(Jeton *Board[8][8], Joueur *joueurActif, Joueur *joueurPassif, Jeton nouveauJeton)
 {
     int posY = (&nouveauJeton)->y;
     int posX = (&nouveauJeton)->x;
@@ -684,9 +690,11 @@ void captureHaut(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, Je
         Board[posY][posX]->color[0] = (&joueurActif)->color[0];
         posY += 1;
     }
+    joueurActif->nbJetons += nbJetonsACapturer;
+    joueurPassif->nbJetons -= nbJetonsACapturer;
 }
 
-void captureDiagonaleDB(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, Jeton nouveauJeton)
+void captureDiagonaleDB(Jeton *Board[8][8], Joueur *joueurActif, Joueur *joueurPassif, Jeton nouveauJeton)
 {
 
     int posY = (&nouveauJeton)->y;
@@ -706,8 +714,10 @@ void captureDiagonaleDB(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPas
         posX -= 1;
         posY -= 1;
     }
+    joueurActif->nbJetons += nbJetonsACapturer;
+    joueurPassif->nbJetons -= nbJetonsACapturer;
 }
-void captureDiagonaleDH(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, Jeton nouveauJeton)
+void captureDiagonaleDH(Jeton *Board[8][8], Joueur *joueurActif, Joueur *joueurPassif, Jeton nouveauJeton)
 {
 
     int posY = (&nouveauJeton)->y;
@@ -727,8 +737,10 @@ void captureDiagonaleDH(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPas
         posX -= 1;
         posY += 1;
     }
+    joueurActif->nbJetons += nbJetonsACapturer;
+    joueurPassif->nbJetons -= nbJetonsACapturer;
 }
-void captureDiagonaleGB(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, Jeton nouveauJeton)
+void captureDiagonaleGB(Jeton *Board[8][8], Joueur *joueurActif, Joueur *joueurPassif, Jeton nouveauJeton)
 {
 
     int posY = (&nouveauJeton)->y;
@@ -748,8 +760,10 @@ void captureDiagonaleGB(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPas
         posX += 1;
         posY -= 1;
     }
+    joueurActif->nbJetons += nbJetonsACapturer;
+    joueurPassif->nbJetons -= nbJetonsACapturer;
 }
-void captureDiagonaleGH(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, Jeton nouveauJeton)
+void captureDiagonaleGH(Jeton *Board[8][8], Joueur *joueurActif, Joueur *joueurPassif, Jeton nouveauJeton)
 {
 
     int posY = (&nouveauJeton)->y;
@@ -769,6 +783,8 @@ void captureDiagonaleGH(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPas
         posX += 1;
         posY += 1;
     }
+    joueurActif->nbJetons += nbJetonsACapturer;
+    joueurPassif->nbJetons -= nbJetonsACapturer;
 }
 
 /*----------------------------------FIN PARTIE---------------------------------------------------*/

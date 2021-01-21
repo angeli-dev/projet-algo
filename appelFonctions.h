@@ -30,15 +30,15 @@ void testReussi(int posX, int posY, Jeton *tableauJouables[30]);
 int testJeton(int posX, int posY, Jeton *tableauJouables[30]);
 
 //fonctions capture
-void captureJetons(Jeton *Board[8][8], Joueur joueurActif, Joueur Passif, Jeton nouveauJeton);
-void captureDroite(Jeton *Board[8][8], Joueur joueurActif, Joueur Passif, Jeton nouveauJeton);
-void captureGauche(Jeton *Board[8][8], Joueur joueurActif, Joueur Passif, Jeton nouveauJeton);
-void captureHaut(Jeton *Board[8][8], Joueur joueurActif, Joueur Passif, Jeton nouveauJeton);
-void captureBas(Jeton *Board[8][8], Joueur joueurActif, Joueur Passif, Jeton nouveauJeton);
-void captureDiagonaleDH(Jeton *Board[8][8], Joueur joueurActif, Joueur Passif, Jeton nouveauJeton);
-void captureDiagonaleDB(Jeton *Board[8][8], Joueur joueurActif, Joueur Passif, Jeton nouveauJeton);
-void captureDiagonaleGH(Jeton *Board[8][8], Joueur joueurActif, Joueur Passif, Jeton nouveauJeton);
-void captureDiagonaleGB(Jeton *Board[8][8], Joueur joueurActif, Joueur Passif, Jeton nouveauJeton);
+void captureJetons(Jeton *Board[8][8], Joueur *joueurActif, Joueur *joueurPassif, Jeton nouveauJeton);
+void captureDroite(Jeton *Board[8][8], Joueur *joueurActif, Joueur *joueurPassif, Jeton nouveauJeton);
+void captureGauche(Jeton *Board[8][8], Joueur *joueurActif, Joueur *joueurPassif, Jeton nouveauJeton);
+void captureHaut(Jeton *Board[8][8], Joueur *joueurActif, Joueur *joueurPassif, Jeton nouveauJeton);
+void captureBas(Jeton *Board[8][8], Joueur *joueurActif, Joueur *joueurPassif, Jeton nouveauJeton);
+void captureDiagonaleDH(Jeton *Board[8][8], Joueur *joueurActif, Joueur *joueurPassif, Jeton nouveauJeton);
+void captureDiagonaleDB(Jeton *Board[8][8], Joueur *joueurActif, Joueur *joueurPassif, Jeton nouveauJeton);
+void captureDiagonaleGH(Jeton *Board[8][8], Joueur *joueurActif, Joueur *joueurPassif, Jeton nouveauJeton);
+void captureDiagonaleGB(Jeton *Board[8][8], Joueur *joueurActif, Joueur *joueurPassif, Jeton nouveauJeton);
 
 //Fin du jeu
 int finPartie(Joueur j1, Joueur j2);
