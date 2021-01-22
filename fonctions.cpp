@@ -271,20 +271,35 @@ int testJeton(int posX, int posY, Jeton *tableauJouables[30])
 //stocke la case jouable dans un tableau
 void testReussi(int posX, int posY, Jeton *tableauJouables[30])
 {
-    //pointe la dernière case du tableau
-    int n = 0;
-    n = tailleTableau(tableauJouables);
+    int i = 0;
+    int presence = 0;
+    while (tableauJouables[i])
+    {
+        if (tableauJouables[i]->x == posX && tableauJouables[i]->y == posY)
+        {
+            //la case est déjà dans le tableau
+            presence = 1;
+        }
+        i++;
+    }
+    if (presence == 0)
+    //la case n'est pas déjà dans le tableau
+    {
+        //pointe la dernière case du tableau
+        int n = 0;
+        n = tailleTableau(tableauJouables);
 
-    //affiche la case jouable
-    cout << colonneLettre(posX) << posY + 1 << " ";
+        //affiche la case jouable
+        cout << colonneLettre(posX) << posY + 1 << " ";
 
-    //créé un jeton identique à celui que pourrait jouer le joueur
-    Jeton *nouveauJeton = (Jeton *)malloc(sizeof(*nouveauJeton));
-    nouveauJeton->x = posX;
-    nouveauJeton->y = posY;
+        //créé un jeton identique à celui que pourrait jouer le joueur
+        Jeton *nouveauJeton = (Jeton *)malloc(sizeof(*nouveauJeton));
+        nouveauJeton->x = posX;
+        nouveauJeton->y = posY;
 
-    //met la case jouable dans le tableau
-    tableauJouables[n] = nouveauJeton;
+        //met la case jouable dans le tableau
+        tableauJouables[n] = nouveauJeton;
+    }
 }
 
 /*--------------------------PARCOURS LES CASES DU TABLEAU ET DETERMINE SI ELLE CAPTURE SONT JOUABLES----------------------------------*/
@@ -636,6 +651,7 @@ void captureDroite(Jeton *Board[8][8], Joueur *joueurActif, Joueur *joueurPassif
             posX -= 1;
         }
     }
+    // cout << nbJetonsACapturer << endl;
     (joueurActif)->nbJetons += nbJetonsACapturer;
     (joueurPassif)->nbJetons -= nbJetonsACapturer;
 }
