@@ -931,6 +931,7 @@ int finPartie(Jeton *Board[8][8], Joueur j1, Joueur j2)
         return 1;
     }
 }
+
 void resultatsJeu(Joueur j1, Joueur j2)
 {
     //déclare le gagnant ou l'égalité entre les joueurs
