@@ -890,7 +890,7 @@ void resultatsJeu(Joueur j1, Joueur j2)
     else if (j1.nbJetons < j2.nbJetons)
     {
         cout << j2.name << " a gagne la partie ! " << endl;
-    }
+        }
     else
     {
         cout << "Egalite entre les deux joueurs ! " << endl;
