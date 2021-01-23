@@ -648,7 +648,6 @@ void captureDroite(Jeton *Board[8][8], Joueur *joueurActif, Joueur *joueurPassif
         posX += 1;
         while (posX < 7 && Board[posY][posX] && Board[posY][posX]->color[0] == (joueurPassif)->color[0])
         //à l'interieur du tableau ET sur case non vide ET avec un jeton adverse
-        //si bug à l'extremité haute ou gauche du plateau changer les 1 en 0
         {
             nbJetonsACapturer += 1;
             posX += 1; //on teste le jeton suivant
@@ -678,7 +677,7 @@ void captureGauche(Jeton *Board[8][8], Joueur *joueurActif, Joueur *joueurPassif
     if (posX > 1)
     {
         posX -= 1;
-        while (posX > 1 && Board[posY][posX] && Board[posY][posX]->color[0] == (joueurPassif)->color[0])
+        while (posX > 0 && Board[posY][posX] && Board[posY][posX]->color[0] == (joueurPassif)->color[0])
         {
             nbJetonsACapturer += 1;
             posX -= 1;
@@ -730,7 +729,7 @@ void captureHaut(Jeton *Board[8][8], Joueur *joueurActif, Joueur *joueurPassif, 
     if (posY > 1)
     {
         posY -= 1;
-        while (posY > 1 && Board[posY][posX] && Board[posY][posX]->color[0] == (joueurPassif)->color[0])
+        while (posY > 0 && Board[posY][posX] && Board[posY][posX]->color[0] == (joueurPassif)->color[0])
         {
             nbJetonsACapturer += 1;
             posY -= 1;
@@ -788,7 +787,7 @@ void captureDiagonaleDH(Jeton *Board[8][8], Joueur *joueurActif, Joueur *joueurP
     {
         posY -= 1;
         posX += 1;
-        while (posY > 1 && posX < 7 && Board[posY][posX] && Board[posY][posX]->color[0] == (joueurPassif)->color[0])
+        while (posY > 0 && posX < 7 && Board[posY][posX] && Board[posY][posX]->color[0] == (joueurPassif)->color[0])
         {
             nbJetonsACapturer += 1;
             posX += 1;
@@ -818,7 +817,7 @@ void captureDiagonaleGB(Jeton *Board[8][8], Joueur *joueurActif, Joueur *joueurP
     {
         posY += 1;
         posX -= 1;
-        while (posY < 7 && posX > 1 && Board[posY][posX] && Board[posY][posX]->color[0] == (joueurPassif)->color[0])
+        while (posY < 7 && posX > 0 && Board[posY][posX] && Board[posY][posX]->color[0] == (joueurPassif)->color[0])
         {
             nbJetonsACapturer += 1;
             posX -= 1;
@@ -848,7 +847,7 @@ void captureDiagonaleGH(Jeton *Board[8][8], Joueur *joueurActif, Joueur *joueurP
     {
         posY -= 1;
         posX -= 1;
-        while (posX > 1 && posY > 1 && Board[posY][posX] && Board[posY][posX]->color[0] == (joueurPassif)->color[0])
+        while (posX > 1 && posY > 0 && Board[posY][posX] && Board[posY][posX]->color[0] == (joueurPassif)->color[0])
         {
             nbJetonsACapturer += 1;
             posX -= 1;
