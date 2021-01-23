@@ -41,5 +41,5 @@ void captureDiagonaleGH(Jeton *Board[8][8], Joueur *joueurActif, Joueur *Passif,
 void captureDiagonaleGB(Jeton *Board[8][8], Joueur *joueurActif, Joueur *Passif, Jeton nouveauJeton);
 
 //Fin du jeu
-int finPartie(Joueur j1, Joueur j2);
+int finPartie(Jeton *Board[8][8], Joueur j1, Joueur j2);
 void resultatsJeu(Joueur j1, Joueur j2);

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstdlib>
 #include "structure.h"
 #include "appelFonctions.h"
 using namespace std;
@@ -14,7 +15,7 @@ int main(int argc, char *argv[])
     initBoard((&jeu1)->Board, j1, j2);
     displayBoard((&jeu1)->Board);
 
-    while (finPartie(j1, j2))
+    while (finPartie((&jeu1)->Board, j1, j2))
     {
         nouveauTour((&jeu1)->Board, &j1, &j2);
         joueurSuivant(&j1, &j2);

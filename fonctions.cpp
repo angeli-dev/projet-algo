@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstdio>
 #include <cstring>
+#include <cstdlib>
 //#include <string.h>
 using namespace std;
 
@@ -55,6 +56,11 @@ void initJoueur(Jeu *jeu)
 {
     Joueur *jou1 = (Joueur *)malloc(sizeof(*jou1));
     Joueur *jou2 = (Joueur *)malloc(sizeof(*jou2));
+    if (jou1 == NULL || jou2 == NULL)
+    {
+        cout << "L'allocation n'a pas fonctionné." << endl;
+        exit(1);
+    }
     while (1)
     {
         cout << "Quel est le nom du premier joueur : ";
@@ -100,6 +106,11 @@ void initJoueur(Jeu *jeu)
 Jeton *initJeton(Jeton *Board[8][8], Joueur joueurActif, int posY, int posX)
 {
     Jeton *nouveauJeton = (Jeton *)malloc(sizeof(*nouveauJeton));
+    if (nouveauJeton == NULL)
+    {
+        cout << "L'allocation n'a pas fonctionné." << endl;
+        exit(1);
+    }
     nouveauJeton->x = posX;
     nouveauJeton->y = posY;
     //Récupérer couleur du joueur
@@ -124,7 +135,7 @@ void nouveauTour(Jeton *Board[8][8], Joueur *joueurActif, Joueur *joueurPassif)
 
     if (tailleTableau(tableau) == 0) //si le tableau est vide, pas de cases jouables
     {
-        cout << "aucune" << endl;
+        cout << "Aucune" << endl;
         cout << "Tu passes ton tour" << endl;
         //fin du tour, passe au joueur suivant
     }
@@ -135,6 +146,20 @@ void nouveauTour(Jeton *Board[8][8], Joueur *joueurActif, Joueur *joueurPassif)
 
         //capture les jetons
         captureJetons(Board, joueurActif, joueurPassif, *jeton);
+        /*for (int i = 0; i < 8; i++)
+        {
+            for (int j = 0; j < 8; j++)
+            {
+                if (Board[i][j]->color[0] == joueurActif->color[0])
+                {
+                    joueurActif->nbJetons +=1;
+                }
+                else if (Board[i][j]->color[0] == joueurPassif->color[0])
+                {
+                    joueurPassif->nbJetons +=1;
+                }
+            }   
+        }*/
         displayBoard(Board);
     }
 }
@@ -160,17 +185,25 @@ Jeton *nouveauJeton(Jeton *Board[8][8], Joueur *joueurActif, Jeton *tableauJouab
 
     /*----------TEST VALIDITE JETON--------------------------------*/
     int validite = 0;
-    while (validite == 0) //tant que le jeton n'est pas jouable
+    while (1)
     {
         //demande et récupère les coordonnées du jeton
         coordJeton(&posX, &posY);
         validite = testJeton(posX, posY, tableauJouables);
+        if (validite == 0)
+        {
+            cout << "La case n'est pas valable ! " << endl;
+        }
+        else
+        {
+            break;
+        }
     }
 
-    //ajoute un jeton supplémentaire au nombre de jeton du joueur actif
+    //Ajoute un jeton supplémentaire au nombre de jeton du joueur actif
     (joueurActif)->nbJetons += 1;
 
-    //place le jeton dans le tableau
+    //Place le jeton dans le tableau
     return initJeton(Board, *joueurActif, posY, posX);
 }
 
@@ -178,7 +211,7 @@ void coordJeton(int *posX, int *posY)
 {
     char pos[2];
 
-    //demande placement jeton
+    //Demande placement jeton
     cout << "Ou voulez vous placez votre jeton : (Ex: B4, G2...) ";
     cin >> pos;
 
@@ -294,6 +327,11 @@ void testReussi(int posX, int posY, Jeton *tableauJouables[30])
 
         //créé un jeton identique à celui que pourrait jouer le joueur
         Jeton *nouveauJeton = (Jeton *)malloc(sizeof(*nouveauJeton));
+        if (nouveauJeton == NULL)
+        {
+            cout << "L'allocation n'a pas fonctionné." << endl;
+            exit(1);
+        }
         nouveauJeton->x = posX;
         nouveauJeton->y = posY;
 
@@ -646,7 +684,7 @@ void captureDroite(Jeton *Board[8][8], Joueur *joueurActif, Joueur *joueurPassif
     if (posX < 6)
     {
         posX += 1;
-        while (posX < 7 && Board[posY][posX] && Board[posY][posX]->color[0] == (joueurPassif)->color[0])
+        while (posX < 6 && Board[posY][posX] && Board[posY][posX]->color[0] == (joueurPassif)->color[0])
         //à l'interieur du tableau ET sur case non vide ET avec un jeton adverse
         {
             nbJetonsACapturer += 1;
@@ -662,10 +700,10 @@ void captureDroite(Jeton *Board[8][8], Joueur *joueurActif, Joueur *joueurPassif
                 Board[posY][posX]->color[0] = (joueurActif)->color[0];
                 posX -= 1;
             }
+            (joueurActif)->nbJetons += nbJetonsACapturer;
+            (joueurPassif)->nbJetons -= nbJetonsACapturer;
         }
         // cout << nbJetonsACapturer << endl;
-        (joueurActif)->nbJetons += nbJetonsACapturer;
-        (joueurPassif)->nbJetons -= nbJetonsACapturer;
     }
 }
 
@@ -677,7 +715,7 @@ void captureGauche(Jeton *Board[8][8], Joueur *joueurActif, Joueur *joueurPassif
     if (posX > 1)
     {
         posX -= 1;
-        while (posX > 0 && Board[posY][posX] && Board[posY][posX]->color[0] == (joueurPassif)->color[0])
+        while (posX > 1 && Board[posY][posX] && Board[posY][posX]->color[0] == (joueurPassif)->color[0])
         {
             nbJetonsACapturer += 1;
             posX -= 1;
@@ -703,7 +741,7 @@ void captureBas(Jeton *Board[8][8], Joueur *joueurActif, Joueur *joueurPassif, J
     if (posY < 6)
     {
         posY += 1;
-        while (posY < 7 && Board[posY][posX] && Board[posY][posX]->color[0] == (joueurPassif)->color[0])
+        while (posY < 6 && Board[posY][posX] && Board[posY][posX]->color[0] == (joueurPassif)->color[0])
         {
             nbJetonsACapturer += 1;
             posY += 1;
@@ -729,7 +767,7 @@ void captureHaut(Jeton *Board[8][8], Joueur *joueurActif, Joueur *joueurPassif, 
     if (posY > 1)
     {
         posY -= 1;
-        while (posY > 0 && Board[posY][posX] && Board[posY][posX]->color[0] == (joueurPassif)->color[0])
+        while (posY > 1 && Board[posY][posX] && Board[posY][posX]->color[0] == (joueurPassif)->color[0])
         {
             nbJetonsACapturer += 1;
             posY -= 1;
@@ -757,7 +795,7 @@ void captureDiagonaleDB(Jeton *Board[8][8], Joueur *joueurActif, Joueur *joueurP
     {
         posY += 1;
         posX += 1;
-        while (posY < 7 && posX < 7 && Board[posY][posX] && Board[posY][posX]->color[0] == (joueurPassif)->color[0])
+        while (posY < 6 && posX < 6 && Board[posY][posX] && Board[posY][posX]->color[0] == (joueurPassif)->color[0])
         {
             nbJetonsACapturer += 1;
             posX += 1;
@@ -787,7 +825,7 @@ void captureDiagonaleDH(Jeton *Board[8][8], Joueur *joueurActif, Joueur *joueurP
     {
         posY -= 1;
         posX += 1;
-        while (posY > 0 && posX < 7 && Board[posY][posX] && Board[posY][posX]->color[0] == (joueurPassif)->color[0])
+        while (posY > 1 && posX < 6 && Board[posY][posX] && Board[posY][posX]->color[0] == (joueurPassif)->color[0])
         {
             nbJetonsACapturer += 1;
             posX += 1;
@@ -817,7 +855,7 @@ void captureDiagonaleGB(Jeton *Board[8][8], Joueur *joueurActif, Joueur *joueurP
     {
         posY += 1;
         posX -= 1;
-        while (posY < 7 && posX > 0 && Board[posY][posX] && Board[posY][posX]->color[0] == (joueurPassif)->color[0])
+        while (posY < 6 && posX > 1 && Board[posY][posX] && Board[posY][posX]->color[0] == (joueurPassif)->color[0])
         {
             nbJetonsACapturer += 1;
             posX -= 1;
@@ -847,7 +885,7 @@ void captureDiagonaleGH(Jeton *Board[8][8], Joueur *joueurActif, Joueur *joueurP
     {
         posY -= 1;
         posX -= 1;
-        while (posX > 0 && posY > 0 && Board[posY][posX] && Board[posY][posX]->color[0] == (joueurPassif)->color[0])
+        while (posX > 1 && posY > 1 && Board[posY][posX] && Board[posY][posX]->color[0] == (joueurPassif)->color[0])
         {
             nbJetonsACapturer += 1;
             posX -= 1;
@@ -870,9 +908,24 @@ void captureDiagonaleGH(Jeton *Board[8][8], Joueur *joueurActif, Joueur *joueurP
 
 /*----------------------------------FIN PARTIE---------------------------------------------------*/
 
-int finPartie(Joueur j1, Joueur j2)
+int finPartie(Jeton *Board[8][8], Joueur j1, Joueur j2)
 {
-    if (j1.nbJetons == 0 || j2.nbJetons == 0)
+    int compt = 0;
+    for (int i = 0; i < 8; i++)
+    {
+        for (int j = 0; j < 8; j++)
+        {
+            if (Board[i][j] && (Board[i][j]->color[0] == (&j1)->color[0] || Board[i][j]->color[0] == (&j2)->color[0]))
+            //si la case n'est pas vide ET que la couleur du jeton est égale à celle d'un des 2 joueurs
+            {
+                compt += 1;
+                //on ajoute un au compteur
+            }
+        }
+    }
+
+    if (j1.nbJetons == 0 || j2.nbJetons == 0 || compt == 64)
+    //si le nombre de jeton d'un des 2 joueurs est égal à 0 OU que le plateau est rempli de jetons (plus de cases vides)
     {
         return 0;
     }
