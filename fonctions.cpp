@@ -847,7 +847,7 @@ void captureDiagonaleGH(Jeton *Board[8][8], Joueur *joueurActif, Joueur *joueurP
     {
         posY -= 1;
         posX -= 1;
-        while (posX > 1 && posY > 0 && Board[posY][posX] && Board[posY][posX]->color[0] == (joueurPassif)->color[0])
+        while (posX > 0 && posY > 0 && Board[posY][posX] && Board[posY][posX]->color[0] == (joueurPassif)->color[0])
         {
             nbJetonsACapturer += 1;
             posX -= 1;
