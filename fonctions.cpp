@@ -135,8 +135,8 @@ void nouveauTour(Jeton *Board[8][8], Joueur *joueurActif, Joueur *joueurPassif)
 
     if (tailleTableau(tableau) == 0) //si le tableau est vide, pas de cases jouables
     {
-        cout << "Aucune" << endl;
-        cout << "Tu passes ton tour" << endl;
+        cout << "Aucune case n'est jouable pour le moment." << endl;
+        cout << "Tu passes ton tour :(" << endl;
         //fin du tour, passe au joueur suivant
     }
     else //il y a des cases jouables
@@ -160,8 +160,9 @@ void nouveauTour(Jeton *Board[8][8], Joueur *joueurActif, Joueur *joueurPassif)
                 }
             }   
         }*/
-        displayBoard(Board);
     }
+    //affiche la grille à la fin du tour
+    displayBoard(Board);
 }
 
 //définit le joueur actuel
@@ -932,6 +933,7 @@ int finPartie(Jeton *Board[8][8], Joueur j1, Joueur j2)
 }
 void resultatsJeu(Joueur j1, Joueur j2)
 {
+    //déclare le gagnant ou l'égalité entre les joueurs
     if (j1.nbJetons > j2.nbJetons)
     {
         cout << j1.name << " a gagne la partie ! " << endl;
@@ -944,4 +946,8 @@ void resultatsJeu(Joueur j1, Joueur j2)
     {
         cout << "Egalite entre les deux joueurs ! " << endl;
     }
+
+    //affiche le nombre de jetons de chaque joueur
+    cout << "Nombre de jetons de " << j1.name << " : " << j1.nbJetons << endl;
+    cout << "Nombre de jetons de " << j2.name << " : " << j2.nbJetons << endl;
 }
