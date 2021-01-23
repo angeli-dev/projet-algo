@@ -646,8 +646,9 @@ void captureDroite(Jeton *Board[8][8], Joueur *joueurActif, Joueur *joueurPassif
     if (posX < 6)
     {
         posX += 1;
-        while (posX < 6 && Board[posY][posX] && Board[posY][posX]->color[0] == (joueurPassif)->color[0])
+        while (posX < 7 && Board[posY][posX] && Board[posY][posX]->color[0] == (joueurPassif)->color[0])
         //à l'interieur du tableau ET sur case non vide ET avec un jeton adverse
+        //si bug à l'extremité haute ou gauche du plateau changer les 1 en 0
         {
             nbJetonsACapturer += 1;
             posX += 1; //on teste le jeton suivant
@@ -703,7 +704,7 @@ void captureBas(Jeton *Board[8][8], Joueur *joueurActif, Joueur *joueurPassif, J
     if (posY < 6)
     {
         posY += 1;
-        while (posY < 6 && Board[posY][posX] && Board[posY][posX]->color[0] == (joueurPassif)->color[0])
+        while (posY < 7 && Board[posY][posX] && Board[posY][posX]->color[0] == (joueurPassif)->color[0])
         {
             nbJetonsACapturer += 1;
             posY += 1;
@@ -757,7 +758,7 @@ void captureDiagonaleDB(Jeton *Board[8][8], Joueur *joueurActif, Joueur *joueurP
     {
         posY += 1;
         posX += 1;
-        while (posY < 6 && posX < 6 && Board[posY][posX] && Board[posY][posX]->color[0] == (joueurPassif)->color[0])
+        while (posY < 7 && posX < 7 && Board[posY][posX] && Board[posY][posX]->color[0] == (joueurPassif)->color[0])
         {
             nbJetonsACapturer += 1;
             posX += 1;
@@ -787,7 +788,7 @@ void captureDiagonaleDH(Jeton *Board[8][8], Joueur *joueurActif, Joueur *joueurP
     {
         posY -= 1;
         posX += 1;
-        while (posY > 1 && posX < 6 && Board[posY][posX] && Board[posY][posX]->color[0] == (joueurPassif)->color[0])
+        while (posY > 1 && posX < 7 && Board[posY][posX] && Board[posY][posX]->color[0] == (joueurPassif)->color[0])
         {
             nbJetonsACapturer += 1;
             posX += 1;
@@ -817,7 +818,7 @@ void captureDiagonaleGB(Jeton *Board[8][8], Joueur *joueurActif, Joueur *joueurP
     {
         posY += 1;
         posX -= 1;
-        while (posY < 6 && posX > 1 && Board[posY][posX] && Board[posY][posX]->color[0] == (joueurPassif)->color[0])
+        while (posY < 7 && posX > 1 && Board[posY][posX] && Board[posY][posX]->color[0] == (joueurPassif)->color[0])
         {
             nbJetonsACapturer += 1;
             posX -= 1;
@@ -890,7 +891,7 @@ void resultatsJeu(Joueur j1, Joueur j2)
     else if (j1.nbJetons < j2.nbJetons)
     {
         cout << j2.name << " a gagne la partie ! " << endl;
-        }
+    }
     else
     {
         cout << "Egalite entre les deux joueurs ! " << endl;
