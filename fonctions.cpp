@@ -340,7 +340,7 @@ void casesJouables(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, 
             if (Board[row][col] == NULL) // la case est libre
             {
                 /*---TEST POUR UNE CAPTURE A DROITE--*/
-                if (Board[row][col + 1] && col < 6) //vérifie si la case à droite a un jeton et fait partie du tablau
+                if (Board[row][col + 1] && col < 6) //vérifie si la case à droite a un jeton et fait partie du tableau
                 {
                     if (testDroite(Board, joueurActif, joueurPassif, row, col + 1) == 1)
                     {
@@ -652,30 +652,38 @@ void captureJetons(Jeton *Board[8][8], Joueur *joueurActif, Joueur *joueurPassif
 
 void captureDroite(Jeton *Board[8][8], Joueur *joueurActif, Joueur *joueurPassif, Jeton nouveauJeton)
 {
-    //coordonées du pointeur de jeton
-    //inialisé sur le jeton suivant
+    //coordonées du pointeur de jeton inialisés sur le jeton suivant
     int posY = (&nouveauJeton)->y;
     int posX = (&nouveauJeton)->x;
+
+    //intialise le nombre de jetons à capturer et permet aussi d'enregistrer le nombre de déplacement
     int nbJetonsACapturer = 0;
+
     if (posX < 6)
+    //s'il y a minimum 2 cases entre le bord droit de la grille et le jeton (une capture à droite est possible)
     {
         posX += 1;
         while (posX < 7 && Board[posY][posX] && Board[posY][posX]->color[0] == (joueurPassif)->color[0])
-        //à l'interieur du tableau ET sur case non vide ET avec un jeton adverse
+        //le jeton pointé est à l'interieur du tableau ET sur une case non vide ET avec un jeton adverse posé dessus
         {
             nbJetonsACapturer += 1;
             posX += 1; //on teste le jeton suivant
         }
 
-        //On doit vérifier que le pointeur n'a pas pu continuer la boucle while car il pointe un jeton adverse
+        //On doit vérifier que le pointeur n'a pas pu continuer la boucle while car il pointe un jeton du joueur actif
+        //(et non parce que la case est vide ou avec un jeton adverse)
         if (Board[posY][posX] && Board[posY][posX]->color[0] == (joueurActif)->color[0])
         //sur une case non vide ET avec un jeton du joueur actif -> condition de capture 2
         {
             for (int i = 0; i <= nbJetonsACapturer; i++)
+            //tant que tous les jetons capturables n'ont pas été tous capturés
             {
-                Board[posY][posX]->color[0] = (joueurActif)->color[0];
-                posX -= 1;
+                Board[posY][posX]->color[0] = (joueurActif)->color[0]; //on capture le jeton en remplaçant sa couleur par celle du joueur actif
+
+                posX -= 1; //on passe au jeton précédent jusqu'à arriver au nouveau jeton posé
             }
+
+            //on met à jour le nombre de jetons de chaque joueur
             (joueurActif)->nbJetons += nbJetonsACapturer;
             (joueurPassif)->nbJetons -= nbJetonsACapturer;
         }
