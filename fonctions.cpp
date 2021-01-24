@@ -2,7 +2,6 @@
 #include <cstdio>
 #include <cstring>
 #include <cstdlib>
-//#include <string.h>
 using namespace std;
 
 #include "structure.h"
@@ -146,20 +145,6 @@ void nouveauTour(Jeton *Board[8][8], Joueur *joueurActif, Joueur *joueurPassif)
 
         //capture les jetons
         captureJetons(Board, joueurActif, joueurPassif, *jeton);
-        /*for (int i = 0; i < 8; i++)
-        {
-            for (int j = 0; j < 8; j++)
-            {
-                if (Board[i][j]->color[0] == joueurActif->color[0])
-                {
-                    joueurActif->nbJetons +=1;
-                }
-                else if (Board[i][j]->color[0] == joueurPassif->color[0])
-                {
-                    joueurPassif->nbJetons +=1;
-                }
-            }   
-        }*/
     }
     //affiche la grille à la fin du tour
     displayBoard(Board);
@@ -357,9 +342,6 @@ void casesJouables(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, 
                 /*---TEST POUR UNE CAPTURE A DROITE--*/
                 if (Board[row][col + 1] && col < 6) //vérifie si la case à droite a un jeton et fait partie du tablau
                 {
-                    //cout << col << row;
-                    //cout << "testd" << endl;
-
                     if (testDroite(Board, joueurActif, joueurPassif, row, col + 1) == 1)
                     {
                         testReussi(col, row, tableauJouables);
@@ -368,7 +350,6 @@ void casesJouables(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, 
                 /*---TEST POUR UNE CAPTURE A GAUCHE--*/
                 if (Board[row][col - 1] && col > 1)
                 {
-                    //cout << "testg" << endl;
                     if (testGauche(Board, joueurActif, joueurPassif, row, col - 1) == 1)
                     {
                         testReussi(col, row, tableauJouables);
@@ -377,7 +358,6 @@ void casesJouables(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, 
                 /*---TEST POUR UNE CAPTURE EN BAS--*/
                 if (Board[row + 1][col] && row < 6)
                 {
-                    //cout << "testb" << endl;
                     if (testBas(Board, joueurActif, joueurPassif, row + 1, col) == 1)
                     {
                         testReussi(col, row, tableauJouables);
@@ -386,7 +366,6 @@ void casesJouables(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, 
                 /*---TEST POUR UNE CAPTURE EN HAUT--*/
                 if (Board[row - 1][col] && row > 1)
                 {
-                    //cout << "testh" << endl;
                     if (testHaut(Board, joueurActif, joueurPassif, row - 1, col) == 1)
                     {
                         testReussi(col, row, tableauJouables);
@@ -395,7 +374,6 @@ void casesJouables(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, 
                 /*---TEST POUR UNE CAPTURE EN DIAGONALE DROITE HAUT--*/
                 if (Board[row - 1][col + 1] && row > 1 && col < 6)
                 {
-                    //cout << "testdh" << endl;
                     if (testDiagonaleDH(Board, joueurActif, joueurPassif, row - 1, col + 1) == 1)
                     {
                         testReussi(col, row, tableauJouables);
@@ -405,7 +383,6 @@ void casesJouables(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, 
                 /*---TEST POUR UNE CAPTURE EN DIAGONALE GAUCHE HAUT--*/
                 if (Board[row - 1][col - 1] && row > 1 && col > 1)
                 {
-                    //cout << "testgh" << endl;
                     if (testDiagonaleGH(Board, joueurActif, joueurPassif, row - 1, col - 1) == 1)
                     {
                         testReussi(col, row, tableauJouables);
@@ -414,7 +391,6 @@ void casesJouables(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, 
                 /*---TEST POUR UNE CAPTURE EN DIAGONALE GAUCHE BAS--*/
                 if (Board[row + 1][col - 1] && row < 6 && col > 1)
                 {
-                    //cout << "testgb" << endl;
                     if (testDiagonaleGB(Board, joueurActif, joueurPassif, row + 1, col - 1) == 1)
                     {
                         testReussi(col, row, tableauJouables);
@@ -423,7 +399,6 @@ void casesJouables(Jeton *Board[8][8], Joueur joueurActif, Joueur joueurPassif, 
                 /*---TEST POUR UNE CAPTURE EN DIAGONALE DROITE BAS--*/
                 if (Board[row + 1][col + 1] && row < 6 && col < 6)
                 {
-                    //cout << "testdb" << endl;
                     if (testDiagonaleDB(Board, joueurActif, joueurPassif, row + 1, col + 1) == 1)
                     {
                         testReussi(col, row, tableauJouables);
@@ -704,7 +679,6 @@ void captureDroite(Jeton *Board[8][8], Joueur *joueurActif, Joueur *joueurPassif
             (joueurActif)->nbJetons += nbJetonsACapturer;
             (joueurPassif)->nbJetons -= nbJetonsACapturer;
         }
-        // cout << nbJetonsACapturer << endl;
     }
 }
 
